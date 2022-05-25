@@ -1,0 +1,39 @@
+[
+    {
+        "id": "1",
+        "firstname": "Ana",
+        "lastname": "N/A",
+        "loan_amount": "2000",
+        "frequency": "bi",
+        "email": "test1@gmail.com",
+        "phone": "403-408-7465",
+        "total_loan_months": "3",
+        "interest": "4",
+        "payment_dates": {
+          "April-20": {
+              "paid" : 1,
+              "amount" : 30
+          },
+          "May-05": "1",
+          "May-20": "1",
+          "June-20": "0",
+          "July-05": "0"
+        }
+    },
+    {
+        "id": "2",
+        "firstname": "Isabel",
+        "lastname": "N/A",
+        "loan_amount": "2000",
+        "frequency": "monthly",
+        "email": "test2@gmail.com",
+        "phone": "403-293-9283",
+        "total_loan_months": "3",
+        "interest": "4",
+        "payment_dates": {
+          "May-08": "1",
+          "June-08": "0",
+          "July-08": "0"
+        }
+    }
+]

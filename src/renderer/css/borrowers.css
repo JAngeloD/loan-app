@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+.borrower-container {
+    font-family: 'Rubik', sans-serif;
+    position: fixed;
+    margin: 2.5% 17.5% 0 17.5%;
+    padding-top: 5%;
+    height: 90%;
+    width: 80%;
+    background-color: white;
+    box-shadow: 0 3px 16px rgb(0 0 0 / 0.2);
+    overflow-y: scroll;
+}
+
+.header {
+    font-size: 200%;
+    font-weight: bolder;
+    margin: 1% 0% 3% 5%;
+    padding-bottom: 2%;
+    border-bottom: 3px solid black;
+    width: 90%;
+}
+
+/* Table elements */
+
+table {
+    width: 90%;
+    text-align: left;
+    border-collapse: collapse;
+    margin: 2% 5% 5% 5%;
+    border: 0;
+}
+
+table>thead>tr>th {
+    font-size: 22px;
+    padding: 3% 2.5% 3% 2.5%;
+    background-color: rgb(207, 207, 207);
+    font-weight: 600;
+}
+
+table>tbody>tr>td {
+    font-size: 20px;
+    padding: 4% 2.5% 4% 2.5%;
+    border-bottom: 2px solid rgba(192, 192, 192, 0.3);
+}
+
+table>tbody>tr>td:first-child {
+    color: rgb(128, 128, 235);
+}
+
+/* Search Elements */
+.filter > input{
+    margin-left: 5%;
+    padding: 1%;
+    font-size: 16px;
+    border: none;
+    border-bottom: 3px solid rgba(117, 117, 117, 0.5);
+}
+
+.filter > input:focus { outline: none; }
+
+/* Misc button elements */
+button {
+    float: right;
+    top: 0;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 1%;
+}
+
+button:first-of-type { margin-right: 5%; margin-left: 0.5%;}
+
+/* Scroll Elements */
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

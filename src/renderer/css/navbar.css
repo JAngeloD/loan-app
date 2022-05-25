@@ -1,0 +1,8 @@
+.nav-bar {
+    position: fixed;
+    float: left;
+    width: 15%;
+    height: 100em;
+    background-color: rgb(29, 29, 37);
+    box-shadow: 5px 0px 10px rgb(0 0 0 / 0.2);
+}
