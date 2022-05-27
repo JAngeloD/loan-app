@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import DATA from './db.json';
 import { useTable, useGlobalFilter } from 'react-table';
 import { AddBorrower } from './AddBorrower';
 import { RemoveBorrower } from './RemoveBorrower';
-import DATA from './db.json';
+import { fetch } from '../utils/dbaccess'
 
 import '../css/borrowers.css'
 
@@ -57,36 +57,57 @@ export const Borrowers = () => {
     } = useTable({ columns, data} , useGlobalFilter);
 
     const { globalFilter } = state;
+    const [ click, setClick ] = useState(false)
+    const [ id, setID] = useState(0);
 
-    return (
-        <div className='borrower-container'>
-            <div className='header'>List of borrowers</div>
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-            <RemoveBorrower />
-            <AddBorrower />
-            <table {...getTableProps()}>
-                <thead>
-                    {headerGroups.map((headerGroups) => (
-                        <tr {...headerGroups.getHeaderGroupProps()}>
-                            {headerGroups.headers.map((column) => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                    {rows.map((row) => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map((cell) => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                })}
+    if(!click) {
+        return (
+            <div className='borrower-container'>
+                <div className='header'>List of borrowers</div>
+                <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+                <RemoveBorrower />
+                <AddBorrower />
+                <table {...getTableProps()}>
+                    <thead>
+                        {headerGroups.map((headerGroups) => (
+                            <tr {...headerGroups.getHeaderGroupProps()}>
+                                {headerGroups.headers.map((column) => (
+                                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                ))}
                             </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
-        </div>
-    );
+                        ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                        {rows.map((row, index) => {
+                            prepareRow(row);
+                            return (
+                                <tr {...row.getRowProps()}
+                                    onClick = {() => {
+                                        setClick(true)
+                                        setID(index)
+                                    }}>
+                                    {row.cells.map((cell) => {
+                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                                    })}
+                                </tr> 
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        );
+    } else {
+        var borrower = JSON.stringify(fetch(id));
+        return (
+            <div className='borrower-container'>
+                <span onClick={() => {
+                    setClick(false)}}
+                    className="backButton"
+                >Go back</span>
+                <p>{borrower}</p>
+            </div>
+        );
+    }
 }
+
+
