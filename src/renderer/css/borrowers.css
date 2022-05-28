@@ -21,9 +21,9 @@
     width: 90%;
 }
 
-/* Table elements */
+/* table elements for borrower details */
 
-table {
+.borrower-table {
     width: 90%;
     text-align: left;
     border-collapse: collapse;
@@ -31,21 +31,21 @@ table {
     border: 0;
 }
 
-table>thead>tr>th {
+.borrower-table>thead>tr>th {
     font-size: 22px;
     padding: 3% 2.5% 3% 2.5%;
     background-color: rgb(207, 207, 207);
     font-weight: 600;
 }
 
-table>tbody>tr>td {
+.borrower-table>tbody>tr>td {
     font-size: 20px;
     padding: 4% 2.5% 4% 2.5%;
     border-bottom: 2px solid rgba(192, 192, 192, 0.3);
     cursor: pointer;
 }
 
-table>tbody>tr>td:first-child {
+.borrower-table>tbody>tr>td:first-child {
     color: rgb(128, 128, 235);
 }
 
@@ -60,6 +60,35 @@ table>tbody>tr>td:first-child {
 
 .filter > input:focus { outline: none; }
 
+/* Detailed borrower elements */
+.userinfo-low {
+    float: left;
+    margin-left: 5%;
+    width: 45%
+}
+
+.userinfo-low > p > span { font-weight: bolder;}
+
+.payment-table {
+    float: right;
+    margin-right: 5%;
+    width: 45%;
+}
+
+.payment-table>thead>tr>th {
+    font-size: 18px;
+    padding: 2% 2.5% 2% 2.5%;
+    background-color: rgb(207, 207, 207);
+    font-weight: 600;
+}
+
+.payment-table>tbody>tr>td {
+    font-size: 16px;
+    padding: 3% 2.5% 3% 2.5%;
+    border-bottom: 2px solid rgba(192, 192, 192, 0.3);
+    cursor: pointer;
+}
+
 /* Misc button elements */
 button {
     float: right;
@@ -73,9 +102,13 @@ button {
 button:first-of-type { margin-right: 5%; margin-left: 0.5%;}
 
 .backButton {
+    position: absolute;
+    right: 0;
+    margin-top: 1%;
+    margin-right: 5%;
     cursor: pointer;
     border: 2px solid black;
-    padding: 3px;
+    padding: 5px;
 }
 
 /* Scroll Elements */

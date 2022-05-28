@@ -1,111 +1,47 @@
-import React, { useMemo, useState } from 'react';
-import DATA from './db.json';
-import { useTable, useGlobalFilter } from 'react-table';
-import { AddBorrower } from './AddBorrower';
-import { RemoveBorrower } from './RemoveBorrower';
+import React, { useState } from 'react';
+import { AddBorrower } from './borrower_components/AddBorrower';
+import { RemoveBorrower } from './borrower_components/RemoveBorrower';
 import { fetch } from '../utils/dbaccess'
+import { BorrowerTable } from './borrower_components/BorrowerTable'
+import { PaymentTable } from './borrower_components/PaymentTable'; 
 
 import '../css/borrowers.css'
 
-const COLUMNS = [
-    {
-        Header: 'ID',
-        accessor: 'id'
-    },
-    {
-        Header: 'Name',
-        accessor: 'firstname'
-    },
-    {
-        Header: 'Email',
-        accessor: 'email'
-    },
-    {
-        Header: 'Phone',
-        accessor: 'phone'
-    },
-    {
-        Header: 'Loan amount',
-        accessor: 'loan_amount'
-    }
-];
-
-const GlobalFilter = ({ filter, setFilter })  => {
-    return (
-        <span className='filter'>
-            <input value={ filter || ''}
-            onChange={e => setFilter(e.target.value)}
-            placeholder='Search...'
-            />
-        </span>
-    );
-}
 
 export const Borrowers = () => {
 
-    const columns = useMemo(() => COLUMNS, []);
-    const data = useMemo(() => DATA, []);
-
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-        state,
-        setGlobalFilter
-    } = useTable({ columns, data} , useGlobalFilter);
-
-    const { globalFilter } = state;
     const [ click, setClick ] = useState(false)
-    const [ id, setID] = useState(0);
+    const [ id, setID ] = useState(0);
 
     if(!click) {
         return (
             <div className='borrower-container'>
                 <div className='header'>List of borrowers</div>
-                <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
                 <RemoveBorrower />
                 <AddBorrower />
-                <table {...getTableProps()}>
-                    <thead>
-                        {headerGroups.map((headerGroups) => (
-                            <tr {...headerGroups.getHeaderGroupProps()}>
-                                {headerGroups.headers.map((column) => (
-                                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()}>
-                        {rows.map((row, index) => {
-                            prepareRow(row);
-                            return (
-                                <tr {...row.getRowProps()}
-                                    onClick = {() => {
-                                        setClick(true)
-                                        setID(index)
-                                    }}>
-                                    {row.cells.map((cell) => {
-                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                    })}
-                                </tr> 
-                            );
-                        })}
-                    </tbody>
-                </table>
+                <BorrowerTable setClick={setClick} setID={setID}/>
             </div>
         );
     } else {
-        var borrower = JSON.stringify(fetch(id));
         return (
             <div className='borrower-container'>
                 <span onClick={() => {
                     setClick(false)}}
                     className="backButton"
                 >Go back</span>
-                <p>{borrower}</p>
-            </div>
+                <div className='header'>Detailed view of {fetch(id, "firstname")}</div>
+                <div className='userinfo-low'>
+                    <p><span>Name:</span> {fetch(id, "firstname")}</p>
+                    <p><span>Email:</span> {fetch(id, "email")}</p>
+                    <p><span>Phone:</span> {fetch(id, "phone")}</p>
+                    <br/>
+                    <p><span>Personal loan amount:</span> ${fetch(id, "loan_amount")}</p>
+                    <p><span>Total terms:</span> (months): {fetch(id, "total_loan_months")}</p>
+                    <p><span>Frequency:</span> {fetch(id, "frequency")}</p>
+                    <p><span>Interest:</span> {fetch(id, "interest")}%</p>
+                </div>
+                <PaymentTable id={id} />
+            </div> 
         );
     }
 }

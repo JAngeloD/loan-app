@@ -36,13 +36,8 @@ const db = new LowWithLodash(adapter)
 db.read();
 
 // Fetches the entire record of the borrower using the ID
-function fetch(id: number, attribute = "none") {
-    var output = db.data[id];
-
-    if (attribute != "none") {
-        output = output[attribute]
-    }
-
+function fetch(id: number, attribute = "") {
+    var output = db.data[id][attribute];
     return output;
 }
 

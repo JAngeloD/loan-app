@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { Borrowers } from './components/Borrowers';
 import { Navbar } from './components/Navbar';
@@ -6,12 +6,24 @@ import { Navbar } from './components/Navbar';
 import './css/base.css';
 
 function App() {
-  return (
-    <>
-      <Navbar></Navbar>
-      <Borrowers></Borrowers>
-    </>
-  )
+
+  const [ navChoice, setNavChoice ] = useState("dashboard");
+
+  if(navChoice == "dashboard") {
+    return (
+      <>
+        <Navbar setNavChoice={setNavChoice}></Navbar>
+      </>
+    )
+  }
+  else if (navChoice == "borrowers") {
+    return (
+      <>
+        <Navbar setNavChoice={setNavChoice}></Navbar>
+        <Borrowers></Borrowers>
+      </>
+    )
+  }
 }
   
 ReactDOM.render(<App />, document.getElementById("app"));

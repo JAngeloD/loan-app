@@ -1,5 +1,5 @@
 import React from "react"
-import { fetch } from '../utils/dbaccess'
+import { fetch } from '../../utils/dbaccess'
 
 export const AddBorrower = () => {
     
