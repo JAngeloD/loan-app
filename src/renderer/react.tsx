@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { Borrowers } from './components/Borrowers';
+import { Dashboard } from './components/Dashboard';
 import { Navbar } from './components/Navbar';
 
 import './css/base.css';
@@ -13,6 +14,7 @@ function App() {
     return (
       <>
         <Navbar setNavChoice={setNavChoice}></Navbar>
+        <Dashboard></Dashboard>
       </>
     )
   }
