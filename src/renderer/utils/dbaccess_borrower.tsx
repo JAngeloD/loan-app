@@ -12,7 +12,7 @@ type Record = {
     id: number
     firstname: string
     lastname: string
-    loanamount: number
+    loanamount: string
     frequency: string
     email: string
     phone: string
@@ -21,7 +21,7 @@ type Record = {
     paymentdate: Date[]
 }
 
-type Data = Record[]
+type Data = Record[];
 
 class LowWithLodash<T> extends LowSync<T> {
     chain: lodash.ExpChain<this['data']> = lodash.chain(this).get('data')
@@ -37,14 +37,42 @@ db.read();
 
 // Fetches the entire record of the borrower using the ID
 function fetchData(id: number, attribute = "") {
-    var output = db.data[id][attribute];
+    var output = db.data[id - 1][attribute];
+
+    if (attribute == "") {
+        output = db.data[id]
+    }
+
+    console.log(output)
     return output;
 }
 
-function addNewBorrower() {
-    // TODO: Write code to add another borrower
-    // PREREQ: Finalize the JSON structure
+function addData(record: Record = null) {
+
+    db.data.push({
+        id: 3,
+        firstname: 'Angelo',
+        lastname: 'De Vera',
+        loanamount: "2000",
+        frequency: 'bi',
+        email: 'deveraangelo319@gmail.com',
+        phone: '403-408-7465',
+        totalterms: 3,
+        interest: 4,
+        paymentdate: []
+    })
+
     db.write();
 }
 
-export { fetchData, addNewBorrower }
+function deleteData(id: number) {
+    db.data.splice(id - 1, 1);
+    db.write();
+}
+
+function editData(id: number, attribute: string, val) {
+    db.data[id - 1][attribute] = val;
+    db.write();
+}
+
+export { fetchData, addData, deleteData, editData }

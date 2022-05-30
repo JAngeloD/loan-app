@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BorrowerTable } from '../borrower_components/BorrowerTable';
 import { fetchData } from '../../utils/dbaccess_borrower'
 
-import '../css/dashboard.css';
+import '../../css/dashboard.css';
 
 export const Dashboard = () => {
 

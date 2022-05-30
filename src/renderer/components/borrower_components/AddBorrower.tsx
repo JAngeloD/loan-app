@@ -1,10 +1,13 @@
 import React from "react"
-import { fetchData } from '../../utils/dbaccess_borrower'
+import { addData } from '../../utils/dbaccess_borrower'
 
 export const AddBorrower = () => {
     
     return (
-        <button>
+        <button onClick={() => {
+            {addData()}
+            {}
+        }}>
             AddBorrower
         </button>
     )
