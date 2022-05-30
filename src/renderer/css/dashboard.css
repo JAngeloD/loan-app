@@ -8,9 +8,10 @@
     font-family: 'Rubik', sans-serif;
     position: fixed;
     margin: 2.5% 17.5% 0 17.5%;
-    padding-top: 5%;
-    height: 90%;
-    width: 80%;
+    padding: 15px;
+    padding-top: 2%;
+    height: 82.5%;
+    width: 75%;
     background-color: white;
     box-shadow: 0 3px 16px rgb(0 0 0 / 0.2);
     overflow-y: scroll;
@@ -18,9 +19,26 @@
     grid-template-areas: 
         'header1 header2 header3 header4'
         'borrowers borrowers borrowers borrowers';
+    gap: 15px;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-rows: auto 70%;
 }
 
-.dashboard > div {
-    border: 1px solid red
+.infoHeader {
+    box-shadow: 0 3px 16px rgb(0 0 0 / 0.2);
+    padding: 2%;
+    height: 90%;
+    text-align: center;
+}
+
+.label {
+    font-size: 125%;
+    font-weight: bold;
+}
+
+.amount {
+    font-size: 275%;
+    font-weight: bolder;
+    color: rgb(14, 190, 14);
 }
 
