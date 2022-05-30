@@ -1,9 +1,10 @@
 import React from "react"
 
-export const RemoveBorrower = () => {
+export const RemoveBorrower = ({getData}) => {
     return (
-        <button>
+        <button onClick={getData}
+        >
             Remove Borrower
         </button>
-    )
+    );
 }

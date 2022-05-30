@@ -36,7 +36,7 @@ const db = new LowWithLodash(adapter)
 db.read();
 
 // Fetches the entire record of the borrower using the ID
-function fetch(id: number, attribute = "") {
+function fetchData(id: number, attribute = "") {
     var output = db.data[id][attribute];
     return output;
 }
@@ -47,4 +47,4 @@ function addNewBorrower() {
     db.write();
 }
 
-export { fetch, addNewBorrower }
+export { fetchData, addNewBorrower }

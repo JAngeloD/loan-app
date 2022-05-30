@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { PAYMENTCOLUMNS } from './PaymentColumns';
 import { useTable} from 'react-table';
-import { fetch } from '../../utils/dbaccess';
+import { fetchData } from '../../utils/dbaccess_borrower';
 
 export const PaymentTable = ({id}) => {
 
-    const DATA = fetch(id, 'payment_dates')
+    const DATA = fetchData(id, 'payment_dates')
     
     const columns = useMemo(() => PAYMENTCOLUMNS, []);
     const data = useMemo(() => DATA, []);

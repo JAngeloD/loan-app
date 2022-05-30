@@ -1,6 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import DATA from '../db.json';
-import { BORROWERCOLUMNS } from './BorrowerColumns';
 import { useTable, useGlobalFilter } from 'react-table';
 
 const GlobalFilter = ({ filter, setFilter })  => {
@@ -14,10 +12,7 @@ const GlobalFilter = ({ filter, setFilter })  => {
     );
 }
 
-export const BorrowerTable = ({setClick, setID}) => {
-    
-    const columns = useMemo(() => BORROWERCOLUMNS, []);
-    const data = useMemo(() => DATA, []);
+export const BorrowerTable = ({setClick, setID, columns, data}) => {
 
     const {
         getTableProps,

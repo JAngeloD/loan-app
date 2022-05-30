@@ -8,6 +8,7 @@ import './css/base.css';
 
 function App() {
 
+  //Defaults to dashboard 
   const [ navChoice, setNavChoice ] = useState("dashboard");
 
   if(navChoice == "dashboard") {
