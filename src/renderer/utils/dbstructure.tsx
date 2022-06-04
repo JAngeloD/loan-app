@@ -1,20 +1,20 @@
 type Payment_Date = {
-    month: string
-    paid: number
-    amount: number
+    date: string
+    paid: string
+    amount: string
 }
 
 type Borrower_Record = {
-    id: number
+    id: string
     firstname: string
     lastname: string
-    loanamount: number
+    loan_amount: string
     frequency: string
     email: string
     phone: string
-    totalterms: number
-    interest: number
-    paymentdate: Date[]
+    total_loan_months: string
+    interest: string
+    payment_dates: Payment_Date[]
 }
 
 type Data = Borrower_Record[];

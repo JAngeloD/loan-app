@@ -30,18 +30,13 @@ function fetchData(id: number, attribute = "") {
 
 function addData(record: Borrower_Record = null) {
 
-    db.data.push({
-        id: 3,
-        firstname: 'Angelo',
-        lastname: 'De Vera',
-        loanamount: 2000,
-        frequency: 'bi',
-        email: 'deveraangelo319@gmail.com',
-        phone: '403-408-7465',
-        totalterms: 3,
-        interest: 4,
-        paymentdate: []
-    })
+    record.payment_dates = [{
+        date: "poggers",
+        paid: "1",
+        amount: "2000",
+    }]
+
+    db.data.push(record)
 
     db.write();
 }
@@ -56,4 +51,8 @@ function editData(id: number, attribute: string, val) {
     db.write();
 }
 
-export { fetchData, addData, deleteData, editData }
+function getNextID() {
+    return (db.data.length + 1).toString();
+}
+
+export { fetchData, addData, deleteData, editData, getNextID}

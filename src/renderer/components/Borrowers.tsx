@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AddBorrowerButton, AddBorrowerForm } from './borrower_components/AddBorrower';
-import { RemoveBorrower } from './borrower_components/RemoveBorrower';
+import { RemoveBorrower, RemoveBorrowerForm } from './borrower_components/RemoveBorrower';
 import { fetchData } from '../utils/dbaccess_borrower'
 import { BorrowerTable } from './borrower_components/BorrowerTable'
 import { PaymentTable } from './borrower_components/PaymentTable';
@@ -43,9 +43,12 @@ export const Borrowers = () => {
         return (
             <div className='borrower-container'>
                 <div className='header'>List of borrowers</div>
-                <RemoveBorrower getData={getData} />
+                <RemoveBorrower  />
+                <RemoveBorrowerForm getData={getData} />
+
                 <AddBorrowerButton />
-                <AddBorrowerForm />
+                <AddBorrowerForm getData={getData}/>
+
                 <BorrowerTable setClick={setClick} setID={setID} columns={BORROWERCOLUMNS} data={data}/>
             </div>
         );

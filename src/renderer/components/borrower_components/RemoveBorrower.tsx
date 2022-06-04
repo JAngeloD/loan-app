@@ -1,15 +1,21 @@
 import React from "react"
 import { deleteData, editData } from "../../utils/dbaccess_borrower";
 
-export const RemoveBorrower = ({getData}) => {
+const RemoveBorrower = () => {
     return (
-        <button onClick={ () => {
-            {editData(1, "firstname", "TestEdit")}
-            /* {deleteData(0)} */
-            {getData()}
-        }}
-        >
+        <button onClick={ () => {document.getElementById("removeForm").style.display = "block"; }}>
             Remove Borrower
         </button>
     );
 }
+
+const RemoveBorrowerForm = ({getData}) => {
+    return (
+        <form>
+
+        </form>
+    );
+}
+
+
+export {RemoveBorrower, RemoveBorrowerForm}
