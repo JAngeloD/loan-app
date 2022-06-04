@@ -1,0 +1,14 @@
+#borrowerForm {
+    display: none;
+    position: fixed;
+    background-color: white;
+    justify-content: center;
+    width: 50vw;
+    height: 40vw;
+    border: 3px solid black;
+    transform: translate(30%, -15%);
+}
+
+#borrowerForm  {
+    height: 15px
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AddBorrower } from './borrower_components/AddBorrower';
+import { AddBorrowerButton, AddBorrowerForm } from './borrower_components/AddBorrower';
 import { RemoveBorrower } from './borrower_components/RemoveBorrower';
 import { fetchData } from '../utils/dbaccess_borrower'
 import { BorrowerTable } from './borrower_components/BorrowerTable'
@@ -44,7 +44,8 @@ export const Borrowers = () => {
             <div className='borrower-container'>
                 <div className='header'>List of borrowers</div>
                 <RemoveBorrower getData={getData} />
-                <AddBorrower />
+                <AddBorrowerButton />
+                <AddBorrowerForm />
                 <BorrowerTable setClick={setClick} setID={setID} columns={BORROWERCOLUMNS} data={data}/>
             </div>
         );
