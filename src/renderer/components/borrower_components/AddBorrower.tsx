@@ -22,6 +22,17 @@ const AddBorrowerForm = ({getData}) => {
     const [loanmonths, setLoanMonths] = useState('');
     const [interest, setInterest] = useState('');
 
+    const resetStates = () => {
+        setFirstname('')
+        setLastname('')
+        setLoanAmount('')
+        setFrequency('')
+        setEmail('')
+        setPhone('')
+        setLoanMonths('')
+        setInterest('')
+    }
+
     return (
         <form id="borrowerForm">
             <label>
@@ -82,6 +93,7 @@ const AddBorrowerForm = ({getData}) => {
                     payment_dates: []
                 })
                 document.getElementById("borrowerForm").style.display = "none";
+                resetStates();
                 getData();
             }}>
                 Add Borrower

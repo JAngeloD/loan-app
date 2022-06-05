@@ -1,18 +1,34 @@
-import React from "react"
-import { deleteData, editData } from "../../utils/dbaccess_borrower";
+import React, {useState} from "react"
+import { deleteData } from "../../utils/dbaccess_borrower";
+
+import "../../css/popupform.css"
 
 const RemoveBorrower = () => {
     return (
-        <button onClick={ () => {document.getElementById("removeForm").style.display = "block"; }}>
+        <button onClick={() => {document.getElementById("removeForm").style.display = "block";}}>
             Remove Borrower
         </button>
     );
 }
 
 const RemoveBorrowerForm = ({getData}) => {
-    return (
-        <form>
 
+    const [removeId, setRemoveId] = useState(0);
+
+    return (
+        <form id="removeForm">
+            <label>
+                <span>ID of borrower:</span>
+                <input onChange={e => {setRemoveId(parseInt(e.target.value))}} required />
+            </label>
+            <button onClick={() => {
+                event.preventDefault()
+                deleteData(removeId);
+                getData();
+                document.getElementById("removeForm").style.display = "none";
+            }}>
+            Remove Borrower
+            </button>
         </form>
     );
 }

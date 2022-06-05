@@ -30,6 +30,7 @@ function fetchData(id: number, attribute = "") {
 
 function addData(record: Borrower_Record = null) {
 
+    //TODO: self generate payment dates, currently hardcoded 
     record.payment_dates = [{
         date: "poggers",
         paid: "1",
@@ -41,8 +42,18 @@ function addData(record: Borrower_Record = null) {
     db.write();
 }
 
+//TODO: Make it so that the id shifts up/down if an borrower whos id isn't at the end
 function deleteData(id: number) {
-    db.data.splice(id - 1, 1);
+    id -= 1;
+    let nextID = parseInt(db.data[id].id)
+    
+    db.data.splice(id, 1);
+
+    for(let i = 0; i < (db.data.length - id); i++) {
+        db.data[i + id].id = nextID.toString()
+        nextID++;
+    }
+
     db.write();
 }
 
