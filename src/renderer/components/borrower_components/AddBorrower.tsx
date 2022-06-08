@@ -3,6 +3,7 @@ import { addData, getNextID } from '../../utils/dbaccess_borrower'
 
 import "../../css/popupform.css"
 
+//Button
 const AddBorrowerButton = () => {
     return (
         <button onClick={() => {document.getElementById("borrowerForm").style.display = "block"; }}>
@@ -11,16 +12,19 @@ const AddBorrowerButton = () => {
     )
 }
 
+//Form
 const AddBorrowerForm = ({getData}) => {
 
+    //Sets states and deefaults them to empty strings
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [loanamount, setLoanAmount] = useState('');
-    const [frequency, setFrequency] = useState('');
+    const [frequency, setFrequency] = useState('bi'); //Select option defaults to "bi" but doesn't grab the value if the user didn't click the input.
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [loanmonths, setLoanMonths] = useState('');
     const [interest, setInterest] = useState('');
+    const [date, setDate] = useState('');
 
     const resetStates = () => {
         setFirstname('')
@@ -31,6 +35,7 @@ const AddBorrowerForm = ({getData}) => {
         setPhone('')
         setLoanMonths('')
         setInterest('')
+        setDate('')
     }
 
     return (
@@ -78,24 +83,39 @@ const AddBorrowerForm = ({getData}) => {
                 <input onChange={e => { setInterest(e.target.value) }} type="number" required />
             </label>
 
+            <label>
+                <span>Starting Date:</span>
+                <input onChange={e => { setDate(e.target.value) }} type="date" required />
+            </label>
+
             <button onClick={() => {
-                event.preventDefault()
+                event.preventDefault() // Disables submit functionality (We don't want it to refresh the page)
+
+                //Set other attributes for pushing
+                let totalPayment = parseInt(loanamount) + (parseInt(loanamount) * (parseInt(interest) / 100)) //Payment amount with interest
+                let paymentPerPeriod = totalPayment / (((frequency == "bi") ? 2 : 1) * parseInt(loanmonths)) //total payment spread throughout all terms
+
+                console.log(frequency);
+
                 addData({
                     id: getNextID(),
                     firstname: firstname,
                     lastname: lastname,
-                    loan_amount: loanamount,
+                    loan_amount: parseInt(loanamount),
                     frequency: frequency,
                     email: email,
                     phone: phone,
-                    total_loan_months: loanmonths,
-                    interest: interest,
+                    total_loan_months: parseInt(loanmonths),
+                    interest: parseInt(interest),
+                    starting_date: date,
+                    total_payment: totalPayment,
+                    payment_per_period: parseFloat(paymentPerPeriod.toFixed(2)), //I have no idea why it considers it a string when adding toFixed (DOC)
                     payment_dates: []
                 })
                 document.getElementById("borrowerForm").style.display = "none";
                 resetStates();
                 getData();
-            }}>
+            }} type="submit">
                 Add Borrower
             </button>
         </form>

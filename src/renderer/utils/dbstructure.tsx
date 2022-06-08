@@ -1,19 +1,22 @@
 type Payment_Date = {
     date: string
     paid: string
-    amount: string
+    amount: number
 }
 
 type Borrower_Record = {
-    id: string
+    id: number
     firstname: string
     lastname: string
-    loan_amount: string
+    loan_amount: number
     frequency: string
     email: string
     phone: string
-    total_loan_months: string
-    interest: string
+    total_loan_months: number
+    interest: number
+    starting_date: string
+    total_payment: number
+    payment_per_period: number
     payment_dates: Payment_Date[]
 }
 
