@@ -18,6 +18,7 @@ type Borrower_Record = {
     total_payment: number
     payment_per_period: number
     payment_dates: Payment_Date[]
+    notes: string
 }
 
 type Data = Borrower_Record[];

@@ -2,8 +2,8 @@ import { join } from 'path'
 import { LowSync, JSONFileSync } from 'lowdb'
 import { Borrower_Record, Data } from './dbstructure'
 
+//TODO: remove if uncessary in the future
 import lodash from 'lodash'
-
 class LowWithLodash<T> extends LowSync<T> {
     chain: lodash.ExpChain<this['data']> = lodash.chain(this).get('data')
 }
@@ -24,10 +24,10 @@ function fetchData(id: number, attribute = "") {
         output = db.data[id]
     }
 
-    console.log(output)
     return output;
 }
 
+//Pushes a new record to the json db
 function addData(record: Borrower_Record = null) {
 
     let isBi = (record.frequency == "bi") //Stores bool if the frequency is bi or weekly (bi == true) (weekly == fasle)
@@ -52,9 +52,16 @@ function addData(record: Borrower_Record = null) {
 
 //TODO: Make it so that the id shifts up/down if an borrower whos id isn't at the end
 function deleteData(id: number) {
-    id -= 1;
-    let nextID = db.data[id].id
+
+    id -= 1; //offsets id to make it index-based
+
+    //Checks if the input exceeds the total record amount.
+    if(id >= db.data.length) {
+        return;
+    }
     
+    let nextID = db.data[id].id
+
     db.data.splice(id, 1);
 
     for(let i = 0; i < (db.data.length - id); i++) {
@@ -66,6 +73,7 @@ function deleteData(id: number) {
 }
 
 function editData(id: number, attribute: string, val) {
+    console.log(id)
     db.data[id - 1][attribute] = val;
     db.write();
 }
@@ -73,5 +81,10 @@ function editData(id: number, attribute: string, val) {
 function getNextID() {
     return (db.data.length + 1);
 }
+
+//Payment table related methods
+function fetchDates(id: number) {return db.data[id].payment_dates} //Fetches all dates from a borrower
+function fetchDate(id: number, dateIndex: number) {return db.data[id].payment_dates[dateIndex]} //Fetches one date from the given borrower
+
 
 export { fetchData, addData, deleteData, editData, getNextID}

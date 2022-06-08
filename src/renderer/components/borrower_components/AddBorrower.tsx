@@ -110,7 +110,8 @@ const AddBorrowerForm = ({getData}) => {
                     starting_date: date,
                     total_payment: totalPayment,
                     payment_per_period: parseFloat(paymentPerPeriod.toFixed(2)), //I have no idea why it considers it a string when adding toFixed (DOC)
-                    payment_dates: []
+                    payment_dates: [],
+                    notes: ""
                 })
                 document.getElementById("borrowerForm").style.display = "none";
                 resetStates();

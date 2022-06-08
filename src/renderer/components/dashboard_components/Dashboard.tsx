@@ -1,10 +1,32 @@
-import React, { useState } from 'react';
-import { BorrowerTable } from '../borrower_components/BorrowerTable';
-import { fetchData } from '../../utils/dbaccess_borrower'
+import React, { useState, useEffect } from 'react';
+import { PayListTable } from './PayListTable';
 
 import '../../css/dashboard.css';
 
 export const Dashboard = () => {
+
+    const [data, setData] = useState([]);
+
+    const getData = () => {
+        fetch('borrower.json'
+            , {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+        )
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                setData(myJson)
+            });
+    }
+
+    useEffect(() => {
+        getData();
+    }, [])
 
     return (
         <div className='dashboard'>
@@ -34,6 +56,7 @@ export const Dashboard = () => {
             </div>
             <div className="borrowers">
              </div>
+
         </div>
     );
 }
