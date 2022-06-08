@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTable, useGlobalFilter } from 'react-table';
+import { editData } from '../../utils/dbaccess_borrower';
 
 const GlobalFilter = ({ filter, setFilter })  => {
     return (
@@ -45,7 +46,8 @@ export const PayListTable = ({columns, data}) => {
                             return (
                                 <tr {...row.getRowProps()}
                                     onClick = {() => {
-                                        
+                                        //TODO: ADD EDIT FUNCTIOn
+                                        console.log("TEST")
                                     }}>
                                     {row.cells.map((cell) => {
                                         return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;

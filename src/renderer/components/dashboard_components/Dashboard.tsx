@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PayListTable } from './PayListTable';
+import { PAYLISTCOLUMNS } from './PayListColumns';
 
 import '../../css/dashboard.css';
 
@@ -16,12 +17,12 @@ export const Dashboard = () => {
                 }
             }
         )
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (myJson) {
-                setData(myJson)
-            });
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (myJson) {
+            setData(myJson)
+        });
     }
 
     useEffect(() => {
@@ -55,8 +56,9 @@ export const Dashboard = () => {
                 </div>
             </div>
             <div className="borrowers">
-             </div>
+            </div>
 
+            <PayListTable columns={PAYLISTCOLUMNS} data={data} />
         </div>
     );
 }

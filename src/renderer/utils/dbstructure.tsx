@@ -1,5 +1,5 @@
 type Payment_Date = {
-    date: string
+    date: Date
     paid: string
     amount: number
 }
@@ -14,9 +14,10 @@ type Borrower_Record = {
     phone: string
     total_loan_months: number
     interest: number
-    starting_date: string
+    starting_date: Date
     total_payment: number
     payment_per_period: number
+    next_payment_date: Date
     payment_dates: Payment_Date[]
     notes: string
 }

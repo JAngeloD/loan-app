@@ -54,7 +54,6 @@ export const Borrowers = () => {
             </div>
         );
     } else {
-        setNote("")
         return (
             <div className='borrower-container'>
                 <span onClick={() => {setClick(false); setNote("")}} className="backButton">Go back</span>
