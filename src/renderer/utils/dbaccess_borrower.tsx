@@ -40,7 +40,7 @@ function addData(record: Borrower_Record = null) {
     for(let i = 0; i < iter; i++) {
         record.payment_dates.push({
             date: currentIterDate.toDateString(),
-            paid: "N/A",
+            paid: "Not Paid",
             amount: record.payment_per_period,
         })
         currentIterDate.setDate(currentIterDate.getDate() + increment);
@@ -86,5 +86,25 @@ function getNextID() {
 function fetchDates(id: number) {return db.data[id].payment_dates} //Fetches all dates from a borrower
 function fetchDate(id: number, dateIndex: number) {return db.data[id].payment_dates[dateIndex]} //Fetches one date from the given borrower
 
+//Sets the status of the next payment date to "paid"
+function payNextDate(id: number) {
+    id -= 1
+    
+    const nextPaymentDate = new Date(db.data[id].next_payment_date.replace(/-/g, '\/')).toDateString()
 
-export { fetchData, addData, deleteData, editData, getNextID}
+    for(let i = 0; i < db.data[id].payment_dates.length; i++) {
+        if(db.data[id].payment_dates[i].date == nextPaymentDate) {
+            db.data[id].payment_dates[i].paid = "paid"
+
+            //Checks if there is another payment date and assigns the pointer to that 
+            if((i+1) < db.data[id].payment_dates.length) {
+                db.data[id].next_payment_date = db.data[id].payment_dates[i + 1].date
+            }
+
+        }
+    }
+
+    db.write();
+}
+
+export { fetchData, addData, deleteData, editData, getNextID, payNextDate}

@@ -58,7 +58,7 @@ export const Dashboard = () => {
             <div className="borrowers">
             </div>
 
-            <PayListTable columns={PAYLISTCOLUMNS} data={data} />
+            <PayListTable getData={getData()} columns={PAYLISTCOLUMNS} data={data} />
         </div>
     );
 }

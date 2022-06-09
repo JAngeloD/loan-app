@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
-import { editData } from '../../utils/dbaccess_borrower';
+import { payNextDate } from '../../utils/dbaccess_borrower';
 
 const GlobalFilter = ({ filter, setFilter }) => {
     return (
@@ -24,7 +24,7 @@ const hasPassed = (targetDate: Date) => {
     return false;
 }
 
-export const PayListTable = ({ columns, data }) => {
+export const PayListTable = ({ getData, columns, data }) => {
 
     const {
         getTableProps,
@@ -67,8 +67,8 @@ export const PayListTable = ({ columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={() => {
-                                    console.log("ID:" + (row.index + 1))
-                                    console.log(row.cells[3].value)
+                                    payNextDate(row.index + 1)
+                                    getData
                                 }}
                                 style={{
                                     backgroundColor:(hasPassed(row.cells[3].value)) ? 'red' : null
