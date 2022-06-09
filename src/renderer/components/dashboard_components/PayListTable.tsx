@@ -13,6 +13,17 @@ const GlobalFilter = ({ filter, setFilter }) => {
     );
 }
 
+//returns true if the date passed is today or in the past
+const hasPassed = (targetDate: Date) => {
+    const today = new Date()
+    targetDate = new Date(targetDate)
+    if (targetDate.setHours(0, 0, 0, 0) <= today.setHours(0, 0, 0, 0)) {
+        return true;
+    }
+
+    return false;
+}
+
 export const PayListTable = ({ columns, data }) => {
 
     const {
@@ -56,9 +67,13 @@ export const PayListTable = ({ columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={() => {
-                                    //TODO: ADD EDIT FUNCTIOn
                                     console.log("ID:" + (row.index + 1))
-                                }}>
+                                    console.log(row.cells[3].value)
+                                }}
+                                style={{
+                                    backgroundColor:(hasPassed(row.cells[3].value)) ? 'red' : null
+                                }}
+                                >
                                 {row.cells.map((cell) => {
                                     return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
                                 })}
