@@ -16,6 +16,6 @@ export const PAYLISTCOLUMNS = [
     {
         Header: 'Date Due:',
         accessor: 'next_payment_date',
-        Cell: ({value}) => {return format(new Date(value), 'dd/MM/yyyy')}
+        Cell: ({value}) => {return format(new Date(value.replace(/-/g, '\/')), 'yyyy/MM/dd')}
     }
 ];

@@ -94,9 +94,7 @@ const AddBorrowerForm = ({getData}) => {
                 //Set other attributes for pushing
                 let totalPayment = parseInt(loanamount) + (parseInt(loanamount) * (parseInt(interest) / 100)) //Payment amount with interest
                 let paymentPerPeriod = totalPayment / (((frequency == "bi") ? 2 : 1) * parseInt(loanmonths)) //total payment spread throughout all terms
-                let startingDate = new Date(date.replace(/-/g, '\/'));
-
-                console.log(frequency);
+                setDate(date.replace(/-/g, '\/')) //Used to avoid the 1 day off bug that JS has
 
                 addData({
                     id: getNextID(),
@@ -108,9 +106,9 @@ const AddBorrowerForm = ({getData}) => {
                     phone: phone,
                     total_loan_months: parseInt(loanmonths),
                     interest: parseInt(interest),
-                    starting_date: startingDate,
+                    starting_date: date,
                     total_payment: totalPayment,
-                    next_payment_date: startingDate,
+                    next_payment_date: date,
                     payment_per_period: parseFloat(paymentPerPeriod.toFixed(2)), //I have no idea why it considers it a string when adding toFixed (DOC)
                     payment_dates: [],
                     notes: ""

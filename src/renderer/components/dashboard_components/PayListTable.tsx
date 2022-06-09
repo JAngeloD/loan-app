@@ -51,13 +51,13 @@ export const PayListTable = ({ columns, data }) => {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map((row, index) => {
+                    {rows.map((row) => {
                         prepareRow(row);
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={() => {
                                     //TODO: ADD EDIT FUNCTIOn
-                                    console.log("TEST")
+                                    console.log("ID:" + (row.index + 1))
                                 }}>
                                 {row.cells.map((cell) => {
                                     return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;

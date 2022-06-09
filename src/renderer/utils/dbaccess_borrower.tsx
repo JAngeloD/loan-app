@@ -32,14 +32,14 @@ function addData(record: Borrower_Record = null) {
 
     let isBi = (record.frequency == "bi") //Stores bool if the frequency is bi or weekly (bi == true) (weekly == fasle)
     let iter = record.total_loan_months * ((isBi) ? 2 : 1) //Determines how much the for loop iterates.
-    let currentIterDate = record.starting_date // Current date being set into the nested array in the record
+    let currentIterDate = new Date(record.starting_date.replace(/-/g, '\/')) // Current date being set into the nested array in the record
     let increment = (isBi) ? 15 : 31 //Determines the increment of the date; the gap.
 
     //Generates a list of days where the borrower must pay. These days depend on:
     //Interest, Total loan periods (Months), and Loan frequency
     for(let i = 0; i < iter; i++) {
         record.payment_dates.push({
-            date: currentIterDate,
+            date: currentIterDate.toDateString(),
             paid: "N/A",
             amount: record.payment_per_period,
         })
