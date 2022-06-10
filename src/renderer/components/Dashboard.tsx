@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { PayListTable } from './PayListTable';
-import { PAYLISTCOLUMNS } from './PayListColumns';
+import { PayListTable } from './dashboard_components/PayListTable';
+import { PAYLISTCOLUMNS } from './dashboard_components/PayListColumns';
 
-import '../../css/dashboard.css';
+import '../css/dashboard.css';
 
 export const Dashboard = () => {
 
@@ -58,7 +58,7 @@ export const Dashboard = () => {
             <div className="borrowers">
             </div>
 
-            <PayListTable getData={getData()} columns={PAYLISTCOLUMNS} data={data} />
+            <PayListTable getData={getData} columns={PAYLISTCOLUMNS} data={data} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { Borrowers } from './components/Borrowers';
-import { Dashboard } from './components/dashboard_components/Dashboard';
+import { Dashboard } from './components/Dashboard';
 import { Navbar } from './components/Navbar';
 
 import './css/base.css';

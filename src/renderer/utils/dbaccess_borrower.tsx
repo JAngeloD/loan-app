@@ -72,9 +72,16 @@ function deleteData(id: number) {
     db.write();
 }
 
-function editData(id: number, attribute: string, val) {
-    console.log(id)
-    db.data[id - 1][attribute] = val;
+function editData(id: number, attribute: string, val, payment_index = '', payment_col = '') {
+    if(payment_index == null || payment_index == '') {
+        db.data[id - 1][attribute] = val;
+    }
+    else {
+        console.log("id: " + (id - 1) + " attribute: " + attribute + " payment index: " + payment_index + " payment col: " + payment_col)
+        console.log(db.data[id - 1][attribute])
+        db.data[id - 1][attribute][payment_index][payment_col] = val;
+    }
+
     db.write();
 }
 

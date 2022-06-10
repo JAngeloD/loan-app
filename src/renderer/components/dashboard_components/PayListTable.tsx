@@ -44,6 +44,7 @@ export const PayListTable = ({ getData, columns, data }) => {
             ]
         }
     }, useGlobalFilter, useSortBy);
+
     const { globalFilter } = state;
 
     return (
@@ -67,13 +68,13 @@ export const PayListTable = ({ getData, columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={() => {
-                                    payNextDate(row.index + 1)
-                                    getData
+                                    window.confirm('Are you sure you wish to delete this item?') ? payNextDate(row.index + 1) : console.log("cancelled")
+                                    getData();
                                 }}
                                 style={{
-                                    backgroundColor:(hasPassed(row.cells[3].value)) ? 'red' : null
+                                    backgroundColor: (hasPassed(row.cells[3].value)) ? 'red' : null
                                 }}
-                                >
+                            >
                                 {row.cells.map((cell) => {
                                     return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
                                 })}

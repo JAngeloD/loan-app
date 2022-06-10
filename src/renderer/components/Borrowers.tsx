@@ -11,6 +11,7 @@ import '../css/borrowers.css'
 export const Borrowers = () => {
 
     const [data, setData] = useState([]);
+    const [payData, setPayData] = useState([]);
 
     const getData = () => {
         fetch('borrower.json'
@@ -29,8 +30,13 @@ export const Borrowers = () => {
             });
     }
 
+    //Fetches data from the borrower and fetches the person's payment dates
+    const getPayData = (id: number) => {
+        setPayData(fetchData(id, 'payment_dates'))
+    }
+
     useEffect(() => {
-        getData();
+        getData()
     }, [])
 
     //States for advanaced views
@@ -56,7 +62,7 @@ export const Borrowers = () => {
     } else {
         return (
             <div className='borrower-container'>
-                <span onClick={() => {setClick(false); setNote("")}} className="backButton">Go back</span>
+                <span onClick={() => { setClick(false); setNote("") }} className="backButton">Go back</span>
                 <div className='header'>Detailed view of {fetchData(id, "firstname")}</div>
                 <div className='userinfo-low'>
                     <p><span>Name:</span> {fetchData(id, "firstname")}</p>
@@ -68,14 +74,14 @@ export const Borrowers = () => {
                     <p><span>Frequency:</span> {fetchData(id, "frequency")}</p>
                     <p><span>Interest:</span> {fetchData(id, "interest")}%</p>
                 </div>
-                <PaymentTable id={id} />
+                <PaymentTable id={id} getData={getPayData} data={payData} />
                 <div className='notes'>
-                    <textarea onChange={e => {setNote(e.target.value)}}>
+                    <textarea onChange={e => { setNote(e.target.value) }}>
                         {fetchData(id, "notes")}
                     </textarea>
                     <button onClick={() => {
-                                editData(id + 1, "notes", note) //offset the offset
-                            }}
+                        editData(id + 1, "notes", note) //offset the offset
+                    }}
                     >Save Note</button>
                 </div>
             </div>
