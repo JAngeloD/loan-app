@@ -1,17 +1,17 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { PAYMENTCOLUMNS } from './PaymentColumns';
 import { useTable } from 'react-table';
 import { fetchData, editData } from '../../utils/dbaccess_borrower';
 import Popup from 'reactjs-popup';
 
 
-export const PaymentTable = ({ id, getData, data }) => {
+export const PaymentTable = ({ id, getData, data, columns }) => {
+
+    useEffect(() => {
+        getData(id)
+    }, [])
 
     //State hook for inputting new values to the payment dates of a borrower
     const [newVal, setNewVal] = useState('')
-    
-    //Memoizes and initializes the column to make a table instance
-    const columns = useMemo(() => PAYMENTCOLUMNS, []);
 
     const {
         getTableProps,

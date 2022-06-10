@@ -5,6 +5,7 @@ import { fetchData, editData } from '../utils/dbaccess_borrower'
 import { BorrowerTable } from './borrower_components/BorrowerTable'
 import { PaymentTable } from './borrower_components/PaymentTable';
 import { BORROWERCOLUMNS } from './borrower_components/BorrowerColumns';
+import { PAYMENTCOLUMNS } from './borrower_components/PaymentColumns';
 
 import '../css/borrowers.css'
 
@@ -32,7 +33,7 @@ export const Borrowers = () => {
 
     //Fetches data from the borrower and fetches the person's payment dates
     const getPayData = (id: number) => {
-        setPayData(fetchData(id, 'payment_dates'))
+        setPayData([...fetchData(id, 'payment_dates')])
     }
 
     useEffect(() => {
@@ -74,7 +75,7 @@ export const Borrowers = () => {
                     <p><span>Frequency:</span> {fetchData(id, "frequency")}</p>
                     <p><span>Interest:</span> {fetchData(id, "interest")}%</p>
                 </div>
-                <PaymentTable id={id} getData={getPayData} data={payData} />
+                <PaymentTable id={id} getData={getPayData} data={payData} columns={PAYMENTCOLUMNS} />
                 <div className='notes'>
                     <textarea onChange={e => { setNote(e.target.value) }}>
                         {fetchData(id, "notes")}
