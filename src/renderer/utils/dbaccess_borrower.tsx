@@ -96,13 +96,11 @@ function fetchDate(id: number, dateIndex: number) {return db.data[id].payment_da
 //Sets the status of the next payment date to "paid"
 function payNextDate(id: number) {
     id -= 1
-    
     const nextPaymentDate = new Date(db.data[id].next_payment_date.replace(/-/g, '\/')).toDateString()
 
     for(let i = 0; i < db.data[id].payment_dates.length; i++) {
         if(db.data[id].payment_dates[i].date == nextPaymentDate) {
             db.data[id].payment_dates[i].paid = "paid"
-
             //Checks if there is another payment date and assigns the pointer to that 
             if((i+1) < db.data[id].payment_dates.length) {
                 db.data[id].next_payment_date = db.data[id].payment_dates[i + 1].date
@@ -110,6 +108,11 @@ function payNextDate(id: number) {
 
         }
     }
+
+    //Removes a portion of the borrower's potential revenue based on the frequency
+    //TODO: Clean code
+    db.data[id].potential_revenue =  db.data[id].potential_revenue - db.data[id].potential_revenue / ((db.data[id].frequency == "monthly") ? db.data[id].months_left : db.data[id].months_left * 2)
+    db.data[id].months_left -= (db.data[id].frequency == "monthly") ? 1 : 0.5
 
     db.write();
 }

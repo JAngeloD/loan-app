@@ -26,7 +26,38 @@ const AddBorrowerForm = ({getData}) => {
     const [interest, setInterest] = useState('');
     const [date, setDate] = useState('');
 
-    const resetStates = () => {
+    const handleSubmit = event => {
+        
+        event.preventDefault() // Disables submit functionality (We don't want it to refresh the page)
+
+        //Set other attributes for pushing
+        let potentialRevenue = (parseInt(loanamount) * (parseInt(interest) / 100)) * parseInt(loanmonths)
+        let totalPayment = parseInt(loanamount) + potentialRevenue //Payment amount with interest
+        let paymentPerPeriod = totalPayment / (((frequency == "bi") ? 2 : 1) * parseInt(loanmonths)) //total payment spread throughout all terms
+        setDate(date.replace(/-/g, '\/')) //Used to avoid the 1 day off bug that JS has
+
+        addData({
+            id: getNextID(),
+            firstname: firstname,
+            lastname: lastname,
+            loan_amount: parseInt(loanamount),
+            frequency: frequency,
+            email: email,
+            phone: phone,
+            total_loan_months: parseInt(loanmonths),
+            months_left: parseInt(loanmonths),
+            interest: parseInt(interest),
+            starting_date: date,
+            total_payment: totalPayment,
+            potential_revenue:  potentialRevenue,
+            next_payment_date: date,
+            payment_per_period: parseFloat(paymentPerPeriod.toFixed(2)), //I have no idea why it considers it a string when adding toFixed (DOC)
+            payment_dates: [],
+            notes: ""
+        })
+        document.getElementById("borrowerForm").style.display = "none";
+        getData();
+        
         setFirstname('')
         setLastname('')
         setLoanAmount('')
@@ -39,7 +70,7 @@ const AddBorrowerForm = ({getData}) => {
     }
 
     return (
-        <form id="borrowerForm">
+        <form id="borrowerForm" onSubmit={handleSubmit}>
             <label>
                 <span>First Name:</span>
                 <input onChange={e => { setFirstname(e.target.value) }} required />
@@ -88,35 +119,7 @@ const AddBorrowerForm = ({getData}) => {
                 <input onChange={e => { setDate(e.target.value) }} type="date" required />
             </label>
 
-            <button onClick={() => {
-                event.preventDefault() // Disables submit functionality (We don't want it to refresh the page)
-
-                //Set other attributes for pushing
-                let totalPayment = parseInt(loanamount) + (parseInt(loanamount) * (parseInt(interest) / 100)) //Payment amount with interest
-                let paymentPerPeriod = totalPayment / (((frequency == "bi") ? 2 : 1) * parseInt(loanmonths)) //total payment spread throughout all terms
-                setDate(date.replace(/-/g, '\/')) //Used to avoid the 1 day off bug that JS has
-
-                addData({
-                    id: getNextID(),
-                    firstname: firstname,
-                    lastname: lastname,
-                    loan_amount: parseInt(loanamount),
-                    frequency: frequency,
-                    email: email,
-                    phone: phone,
-                    total_loan_months: parseInt(loanmonths),
-                    interest: parseInt(interest),
-                    starting_date: date,
-                    total_payment: totalPayment,
-                    next_payment_date: date,
-                    payment_per_period: parseFloat(paymentPerPeriod.toFixed(2)), //I have no idea why it considers it a string when adding toFixed (DOC)
-                    payment_dates: [],
-                    notes: ""
-                })
-                document.getElementById("borrowerForm").style.display = "none";
-                resetStates();
-                getData();
-            }} type="submit">
+            <button type="submit">
                 Add Borrower
             </button>
         </form>

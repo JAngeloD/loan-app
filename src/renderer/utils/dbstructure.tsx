@@ -5,6 +5,7 @@ randomizes their month for some reason.
 
 */
 
+//Data structure for borrower.json
 type Payment_Date = {
     date: string
     paid: string
@@ -20,9 +21,11 @@ type Borrower_Record = {
     email: string
     phone: string
     total_loan_months: number
+    months_left: number
     interest: number
     starting_date: string
     total_payment: number
+    potential_revenue: number
     payment_per_period: number
     next_payment_date: string
     payment_dates: Payment_Date[]
@@ -31,4 +34,12 @@ type Borrower_Record = {
 
 type Data = Borrower_Record[];
 
-export {Payment_Date, Borrower_Record, Data}
+//Data structure from main.json
+type DataMain = {
+    money_on_hand: number,
+    money_out: number,
+    revenue: number,
+    potential_revenue: number
+}
+
+export {Payment_Date, Borrower_Record, Data, DataMain}

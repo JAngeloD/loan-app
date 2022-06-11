@@ -2,10 +2,8 @@ import { join } from 'path'
 import { LowSync, JSONFileSync } from 'lowdb'
 import lodash from 'lodash'
 
-type Data = {
-    
-}
-
+import { fetchData, getNextID } from './dbaccess_borrower'
+import { DataMain } from './dbstructure'
 
 class LowWithLodash<T> extends LowSync<T> {
     chain: lodash.ExpChain<this['data']> = lodash.chain(this).get('data')
@@ -13,22 +11,72 @@ class LowWithLodash<T> extends LowSync<T> {
 
 // Use JSON file for storage
 const filePath = join(__dirname, 'main.json')
-const adapter = new JSONFileSync<Data>(filePath)
+const adapter = new JSONFileSync<DataMain>(filePath)
 const db = new LowWithLodash(adapter)
 
 //Initializes db.data
 db.read();
 
-// Fetches the entire record of the borrower using the ID
-function fetch(id: number, attribute = "") {
-    var output = db.data[id][attribute];
-    return output;
+function fetch(attribute = "") {
+    if(attribute !== "") {
+        return db.data[attribute];
+    }
+
+    return null;
 }
 
-function addNewBorrower() {
-    // TODO: Write code to add another borrower
-    // PREREQ: Finalize the JSON structure
+function editDataMain(attribute = "", val: number) {
+    if(attribute !== "") {
+        db.data[attribute] = val;
+    }
+
     db.write();
 }
 
-export { fetch, addNewBorrower }
+//Rechecks all borrowers and their information and push them into the db
+function calculateData() {
+    calculateExpectedRevenue()
+    calculateMoneyOut()
+}
+
+//Scans all borrower's potential revenue and returns total number and replaces the current expected revenue
+function calculateExpectedRevenue() {
+    
+    let oldRevenue = fetch("potential_revenue")
+    let newRevenue = 0
+
+    for(let i = 0; i < (getNextID() - 1); i++) {
+        newRevenue += fetchData(i, "potential_revenue");
+        console.log(fetchData(i, "potential_revenue"))
+    }
+    editDataMain("potential_revenue", newRevenue)
+    
+    //If the old potential revenue is larger than the new potential  revenue value then add to current revenue
+    if(oldRevenue > newRevenue) {
+        addToRevenue(oldRevenue - newRevenue)
+    }
+
+    return newRevenue;
+}
+
+function calculateMoneyOut() {
+    let newMoneyOut = 0
+    
+    for(let i = 0; i < (getNextID() - 1); i++) {
+        newMoneyOut += fetchData(i, "loan_amount")
+    }
+
+    editDataMain("money_out", newMoneyOut)
+}
+
+function addToRevenue(val) {
+    let newVal = fetch("revenue") + val
+    editDataMain("revenue", newVal)
+}
+
+function addMoneyOnHand(val: number) {
+    let newMoneyOnHand = fetch("money_on_hand") + val
+    editDataMain("money_on_hand", newMoneyOnHand)
+}
+
+export { fetch, calculateData, addMoneyOnHand }
