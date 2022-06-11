@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
-import { editData, payNextDate } from '../../utils/dbaccess_borrower';
-import { addMoneyOnHand, calculateData } from '../../utils/dbaccess_main';
+import { payNextDate } from '../../utils/dbaccess_borrower';
+import { calculateData } from '../../utils/dbaccess_main';
 
 const GlobalFilter = ({ filter, setFilter }) => {
     return (
@@ -65,13 +65,12 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map((row) => {
+                    {rows.map((row, index) => {
                         prepareRow(row);
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={() => {
-                                    window.confirm('Are you sure you wish to delete this item?') ? payNextDate(row.index + 1, rows.cells[2].value) : console.log("cancelled")
-                                    addMoneyOnHand(row.cells[2].value)
+                                    window.confirm('Are you sure you wish to delete this item?') ? payNextDate(row.index + 1, rows[index].cells[2].value) : console.log("cancelled")
                                     calculateData() 
                                     getData()
                                     resetDashboard()

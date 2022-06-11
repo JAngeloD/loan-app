@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import { deleteData } from "../../utils/dbaccess_borrower";
 
 import "../../css/popupform.css"
+import { calculateData } from "../../utils/dbaccess_main";
 
 const RemoveBorrower = () => {
     return (
@@ -26,6 +27,7 @@ const RemoveBorrowerForm = ({getData}) => {
                 deleteData(removeId);
                 getData();
                 document.getElementById("removeForm").style.display = "none";
+                calculateData();
             }}>
             Remove Borrower
             </button>

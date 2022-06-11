@@ -2,6 +2,8 @@ import { join } from 'path'
 import { LowSync, JSONFileSync } from 'lowdb'
 import { Borrower_Record, Data } from './dbstructure'
 
+import { addMoneyOnHand } from './dbaccess_main'
+
 //TODO: remove if uncessary in the future
 import lodash from 'lodash'
 class LowWithLodash<T> extends LowSync<T> {
@@ -115,6 +117,8 @@ function payNextDate(id: number, amount: number) {
     db.data[id].potential_revenue -= potential_revenue
     db.data[id].months_left -= (db.data[id].frequency == "monthly") ? 1 : 0.5
     db.data[id].payment_left -= amount - potential_revenue
+
+    addMoneyOnHand(amount)
 
     db.write();
 }

@@ -1,5 +1,8 @@
 import React, { useState } from "react"
 import { addData, getNextID } from '../../utils/dbaccess_borrower'
+import { calculateData } from "../../utils/dbaccess_main"
+
+import { fetch } from "../../utils/dbaccess_main"
 
 import "../../css/popupform.css"
 
@@ -27,8 +30,15 @@ const AddBorrowerForm = ({getData}) => {
     const [date, setDate] = useState('');
 
     const handleSubmit = event => {
-        
         event.preventDefault() // Disables submit functionality (We don't want it to refresh the page)
+
+        //Checks if the user has enough money to create a borrower
+        if(loanamount > fetch("money_on_hand")) {
+            alert("Cannot make this borrower, not enough money on hand!")
+            document.getElementById("borrowerForm").style.display = "none"
+            event.target.reset()
+            return
+        }
 
         //Set other attributes for pushing
         let potentialRevenue = (parseInt(loanamount) * (parseInt(interest) / 100)) * parseInt(loanmonths)
@@ -58,16 +68,21 @@ const AddBorrowerForm = ({getData}) => {
         })
         document.getElementById("borrowerForm").style.display = "none";
         getData();
+        calculateData(); //Recalculates the values of the main.json file
         
+        //Reset all states to their default
         setFirstname('')
         setLastname('')
         setLoanAmount('')
-        setFrequency('')
+        setFrequency('bi')
         setEmail('')
         setPhone('')
         setLoanMonths('')
         setInterest('')
         setDate('')
+
+        //Resets the form
+        event.target.reset()
     }
 
     return (

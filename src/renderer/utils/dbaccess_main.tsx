@@ -43,7 +43,7 @@ function calculateData() {
     calculateMoneyOut()
 }
 
-//Scans all borrower's potential revenue and returns total number and replaces the current expected revenue
+//Scans all borrower's POTENTIAL revenue and returns total number and replaces the current expected revenue
 function calculateExpectedRevenue() {
     
     let oldRevenue = fetch("potential_revenue")
@@ -51,12 +51,12 @@ function calculateExpectedRevenue() {
 
     for(let i = 0; i < (getNextID() - 1); i++) {
         newRevenue += fetchData(i, "potential_revenue");
-        console.log(fetchData(i, "potential_revenue"))
     }
     editDataMain("potential_revenue", newRevenue)
     
     //If the old potential revenue is larger than the new potential  revenue value then add to current revenue
     if(oldRevenue > newRevenue) {
+        console.log(oldRevenue - newRevenue)
         addToRevenue(oldRevenue - newRevenue)
     }
 
@@ -73,7 +73,7 @@ function calculateMoneyOut() {
     editDataMain("money_out", newMoneyOut)
 }
 
-function addToRevenue(val) {
+function addToRevenue(val: number) {
     let newVal = fetch("revenue") + val
     editDataMain("revenue", newVal)
 }
