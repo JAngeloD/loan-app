@@ -16,21 +16,31 @@ const RemoveBorrowerForm = ({getData}) => {
 
     const [removeId, setRemoveId] = useState(0);
 
+    const handleSubmit = event => {
+        event.preventDefault()
+
+        if(removeId === 0) {
+            alert("input a number above 0")
+            document.getElementById("removeForm").style.display = "none";
+            event.target.reset()
+            return
+        }
+
+        deleteData(removeId);
+        getData();
+        document.getElementById("removeForm").style.display = "none";
+
+        event.target.reset()
+        calculateData(true); //Recalculates all the values in the db 
+    }
+
     return (
-        <form id="removeForm">
+        <form id="removeForm" onSubmit={handleSubmit}>
             <label>
                 <span>ID of borrower:</span>
                 <input onChange={e => {setRemoveId(parseInt(e.target.value))}} required />
             </label>
-            <button onClick={() => {
-                event.preventDefault()
-                deleteData(removeId);
-                getData();
-                document.getElementById("removeForm").style.display = "none";
-                calculateData();
-            }}>
-            Remove Borrower
-            </button>
+            <button type="submit">Remove Borrower</button>
         </form>
     );
 }

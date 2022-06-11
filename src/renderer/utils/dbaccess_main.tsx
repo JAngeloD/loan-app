@@ -38,13 +38,13 @@ function editDataMain(attribute = "", val: number) {
 }
 
 //Rechecks all borrowers and their information and push them into the db
-function calculateData() {
-    calculateExpectedRevenue()
+function calculateData(deleteMode = false) {
+    calculateExpectedRevenue(deleteMode)
     calculateMoneyOut()
 }
 
 //Scans all borrower's POTENTIAL revenue and returns total number and replaces the current expected revenue
-function calculateExpectedRevenue() {
+function calculateExpectedRevenue(deleteMode: boolean) {
     
     let oldRevenue = fetch("potential_revenue")
     let newRevenue = 0
@@ -55,8 +55,7 @@ function calculateExpectedRevenue() {
     editDataMain("potential_revenue", newRevenue)
     
     //If the old potential revenue is larger than the new potential  revenue value then add to current revenue
-    if(oldRevenue > newRevenue) {
-        console.log(oldRevenue - newRevenue)
+    if(oldRevenue > newRevenue && !deleteMode) {
         addToRevenue(oldRevenue - newRevenue)
     }
 

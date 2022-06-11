@@ -59,6 +59,7 @@ function deleteData(id: number) {
 
     //Checks if the input exceeds the total record amount.
     if(id >= db.data.length) {
+        alert("ID must exist")
         return;
     }
     

@@ -15,7 +15,7 @@ function App() {
     return (
       <>
         <Navbar setNavChoice={setNavChoice}></Navbar>
-        <Dashboard></Dashboard>
+        <Dashboard navChoice={navChoice}></Dashboard>
       </>
     )
   }

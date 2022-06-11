@@ -5,7 +5,6 @@ import { calculateData } from '../../utils/dbaccess_main';
 export const DashboardHeaders = ({getDashboardData, dashboardData}) => {
    
     useEffect(() => {
-        calculateData();
         getDashboardData();
     }, [])
 

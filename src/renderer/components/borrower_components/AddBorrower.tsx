@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { addData, getNextID } from '../../utils/dbaccess_borrower'
-import { calculateData } from "../../utils/dbaccess_main"
+import { addMoneyOnHand, calculateData } from "../../utils/dbaccess_main"
 
 import { fetch } from "../../utils/dbaccess_main"
 
@@ -41,8 +41,9 @@ const AddBorrowerForm = ({getData}) => {
         }
 
         //Set other attributes for pushing
-        let potentialRevenue = (parseInt(loanamount) * (parseInt(interest) / 100)) * parseInt(loanmonths)
-        let totalPayment = parseInt(loanamount) + potentialRevenue //Payment amount with interest
+        let loan = parseInt(loanamount)
+        let potentialRevenue = (loan * (parseInt(interest) / 100)) * parseInt(loanmonths)
+        let totalPayment = loan + potentialRevenue //Payment amount with interest
         let paymentPerPeriod = totalPayment / (((frequency == "bi") ? 2 : 1) * parseInt(loanmonths)) //total payment spread throughout all terms
         setDate(date.replace(/-/g, '\/')) //Used to avoid the 1 day off bug that JS has
 
@@ -50,7 +51,7 @@ const AddBorrowerForm = ({getData}) => {
             id: getNextID(),
             firstname: firstname,
             lastname: lastname,
-            loan_amount: parseInt(loanamount),
+            loan_amount: loan,
             frequency: frequency,
             email: email,
             phone: phone,
@@ -59,7 +60,7 @@ const AddBorrowerForm = ({getData}) => {
             interest: parseInt(interest),
             starting_date: date,
             total_payment: totalPayment,
-            payment_left: parseInt(loanamount),
+            payment_left: loan,
             potential_revenue:  potentialRevenue,
             next_payment_date: date,
             payment_per_period: parseFloat(paymentPerPeriod.toFixed(2)), //I have no idea why it considers it a string when adding toFixed (DOC)
@@ -67,6 +68,8 @@ const AddBorrowerForm = ({getData}) => {
             notes: ""
         })
         document.getElementById("borrowerForm").style.display = "none";
+
+        addMoneyOnHand(loan * -1)
         getData();
         calculateData(); //Recalculates the values of the main.json file
         

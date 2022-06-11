@@ -7,9 +7,10 @@ import { DashboardHeaders } from './dashboard_components/DashboardHeaders';
 import { DataMain } from '../utils/dbstructure';
 
 import '../css/dashboard.css';
+import { calculateData } from '../utils/dbaccess_main';
 
 
-export const Dashboard = () => {
+export const Dashboard = ({navChoice}) => {
 
     const [borrowerData, setBorrowerData] = useState([]);
     const [dashboardData, setDashBoardData] = useState<DataMain>();
@@ -51,6 +52,8 @@ export const Dashboard = () => {
         getDashboardData();
         getBorrowerData();
     }, [])
+
+    useEffect(() => {calculateData(); }, [navChoice])
 
     return (
         <div className='dashboard'>
