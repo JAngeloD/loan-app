@@ -49,6 +49,7 @@ const AddBorrowerForm = ({getData}) => {
             interest: parseInt(interest),
             starting_date: date,
             total_payment: totalPayment,
+            payment_left: parseInt(loanamount),
             potential_revenue:  potentialRevenue,
             next_payment_date: date,
             payment_per_period: parseFloat(paymentPerPeriod.toFixed(2)), //I have no idea why it considers it a string when adding toFixed (DOC)

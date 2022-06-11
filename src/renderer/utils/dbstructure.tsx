@@ -25,6 +25,7 @@ type Borrower_Record = {
     interest: number
     starting_date: string
     total_payment: number
+    payment_left: number
     potential_revenue: number
     payment_per_period: number
     next_payment_date: string

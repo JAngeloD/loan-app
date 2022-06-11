@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { PayListTable } from './dashboard_components/PayListTable';
 import { PAYLISTCOLUMNS } from './dashboard_components/PayListColumns';
 
+import { DashboardHeaders } from './dashboard_components/DashboardHeaders';
+
+import { DataMain } from '../utils/dbstructure';
+
 import '../css/dashboard.css';
+
 
 export const Dashboard = () => {
 
-    const [data, setData] = useState([]);
+    const [borrowerData, setBorrowerData] = useState([]);
+    const [dashboardData, setDashBoardData] = useState<DataMain>();
 
-    const getData = () => {
+    const getBorrowerData = () => {
         fetch('borrower.json'
             , {
                 headers: {
@@ -21,44 +27,35 @@ export const Dashboard = () => {
             return response.json();
         })
         .then(function (myJson) {
-            setData(myJson)
+            setBorrowerData(myJson)
+        });
+    }
+    const getDashboardData = () => {
+        fetch('main.json'
+            , {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+        )
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (myJson) {
+            setDashBoardData(myJson)
         });
     }
 
     useEffect(() => {
-        getData();
+        getDashboardData();
+        getBorrowerData();
     }, [])
 
     return (
         <div className='dashboard'>
-            <div className="header1">
-                <div className='infoHeader'>
-                    <p className='label'>Money on hand</p>
-                    <p className='amount'>$1000</p>
-                </div>
-            </div>
-            <div className="header2">
-                <div className='infoHeader'>
-                    <p className='label'>Money out for loan</p>
-                    <p className='amount'>$1000</p>
-                </div>
-            </div>
-            <div className="header3">
-                <div className='infoHeader'>
-                    <p className='label'>Revenue</p>
-                    <p className='amount'>$1000</p>
-                </div>
-            </div>
-            <div className="header4">
-                <div className='infoHeader'>
-                    <p className='label'>Expected Revenue</p>
-                    <p className='amount'>$1000</p>
-                </div>
-            </div>
-            <div className="borrowers">
-            </div>
-
-            <PayListTable getData={getData} columns={PAYLISTCOLUMNS} data={data} />
+            <DashboardHeaders getDashboardData={getDashboardData} dashboardData={dashboardData}/>
+            <PayListTable getData={getBorrowerData} resetDashboard={getDashboardData} columns={PAYLISTCOLUMNS} data={borrowerData} />
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
-import { payNextDate } from '../../utils/dbaccess_borrower';
+import { editData, payNextDate } from '../../utils/dbaccess_borrower';
 import { addMoneyOnHand, calculateData } from '../../utils/dbaccess_main';
 
 const GlobalFilter = ({ filter, setFilter }) => {
@@ -25,7 +25,7 @@ const hasPassed = (targetDate: Date) => {
     return false;
 }
 
-export const PayListTable = ({ getData, columns, data }) => {
+export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
 
     const {
         getTableProps,
@@ -70,10 +70,11 @@ export const PayListTable = ({ getData, columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={() => {
-                                    window.confirm('Are you sure you wish to delete this item?') ? payNextDate(row.index + 1) : console.log("cancelled")
+                                    window.confirm('Are you sure you wish to delete this item?') ? payNextDate(row.index + 1, rows.cells[2].value) : console.log("cancelled")
                                     addMoneyOnHand(row.cells[2].value)
                                     calculateData() 
                                     getData()
+                                    resetDashboard()
                                 }}
                                 style={{
                                     backgroundColor: (hasPassed(row.cells[3].value)) ? 'red' : null

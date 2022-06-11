@@ -17,6 +17,10 @@ const db = new LowWithLodash(adapter)
 //Initializes db.data
 db.read();
 
+function fetchAll() {
+    return db.data;
+}
+
 function fetch(attribute = "") {
     if(attribute !== "") {
         return db.data[attribute];
@@ -63,7 +67,7 @@ function calculateMoneyOut() {
     let newMoneyOut = 0
     
     for(let i = 0; i < (getNextID() - 1); i++) {
-        newMoneyOut += fetchData(i, "loan_amount")
+        newMoneyOut += fetchData(i, "payment_left")
     }
 
     editDataMain("money_out", newMoneyOut)
@@ -79,4 +83,4 @@ function addMoneyOnHand(val: number) {
     editDataMain("money_on_hand", newMoneyOnHand)
 }
 
-export { fetch, calculateData, addMoneyOnHand }
+export { fetch,fetchAll, calculateData, addMoneyOnHand }
