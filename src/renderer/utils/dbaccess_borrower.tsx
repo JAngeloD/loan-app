@@ -41,7 +41,7 @@ function addData(record: Borrower_Record = null) {
     //Interest, Total loan periods (Months), and Loan frequency
     for(let i = 0; i < iter; i++) {
         record.payment_dates.push({
-            date: currentIterDate.toDateString(),
+            date: currentIterDate.toISOString().split('T').shift(),
             paid: "Not Paid",
             amount: record.payment_per_period,
         })
@@ -103,8 +103,9 @@ function fetchDate(id: number, dateIndex: number) {return db.data[id].payment_da
 //Sets the status of the next payment date to "paid"
 function payNextDate(id: number, amount: number) {
     id -= 1
-    const nextPaymentDate = new Date(db.data[id].next_payment_date.replace(/-/g, '\/')).toDateString()
+    const nextPaymentDate = db.data[id].next_payment_date
 
+    //loops and tries to find the next payment date in the payment array of the borrower
     for(let i = 0; i < db.data[id].payment_dates.length; i++) {
         if(db.data[id].payment_dates[i].date == nextPaymentDate) {
             db.data[id].payment_dates[i].paid = "paid"

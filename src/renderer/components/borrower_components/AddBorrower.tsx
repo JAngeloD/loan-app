@@ -7,6 +7,8 @@ import { fetch } from "../../utils/dbaccess_main"
 import "../../css/popupform.css"
 import Popup from "reactjs-popup"
 
+
+
 //Button
 const AddBorrower = ({ getData }) => {
 
@@ -21,12 +23,25 @@ const AddBorrower = ({ getData }) => {
     const [interest, setInterest] = useState('');
     const [date, setDate] = useState('');
 
+    const resetStates = () => {
+        setFirstname('')
+        setLastname('')
+        setLoanAmount('')
+        setFrequency('bi')
+        setEmail('')
+        setPhone('')
+        setLoanMonths('')
+        setInterest('')
+        setDate('')
+    }
+
     const handleSubmit = event => {
         event.preventDefault() // Disables submit functionality (We don't want it to refresh the page)
 
         //Checks if the user has enough money to create a borrower
         if (loanamount > fetch("money_on_hand")) {
             alert("Cannot make this borrower, not enough money on hand!")
+            resetStates()
             event.target.reset()
             return
         }
@@ -64,16 +79,8 @@ const AddBorrower = ({ getData }) => {
         calculateData(); //Recalculates the values of the maindata.json file
 
         //Reset all states to their default
-        setFirstname('')
-        setLastname('')
-        setLoanAmount('')
-        setFrequency('bi')
-        setEmail('')
-        setPhone('')
-        setLoanMonths('')
-        setInterest('')
-        setDate('')
-
+        resetStates()
+        
         //Resets the form
         event.target.reset()
     }

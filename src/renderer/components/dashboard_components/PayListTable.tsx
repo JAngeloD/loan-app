@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
-import { payNextDate, fetchData } from '../../utils/dbaccess_borrower';
+import { fetchData, payNextDate } from '../../utils/dbaccess_borrower';
 import { calculateData } from '../../utils/dbaccess_main';
 
 const GlobalFilter = ({ filter, setFilter }) => {
@@ -77,7 +77,7 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
                                 }}
                                 style={{
                                     backgroundColor: (hasPassed(row.cells[3].value)) ? 'red' : null,
-                                    display: (fetchData(row.index, "months_left") !== 0) ? "table-row" : "none"
+                                    display: (fetchData(index,"months_left") !== 0) ? "table-row"  : 'none' 
                                 }}
                             >
                                 {row.cells.map((cell) => {
