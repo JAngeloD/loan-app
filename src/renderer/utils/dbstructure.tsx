@@ -16,6 +16,7 @@ type Borrower_Record = {
     id: number
     firstname: string
     lastname: string
+    address: string
     loan_amount: number
     frequency: string
     email: string

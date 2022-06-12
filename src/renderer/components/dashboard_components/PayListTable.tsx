@@ -76,7 +76,7 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
                                     resetDashboard()
                                 }}
                                 style={{
-                                    backgroundColor: (hasPassed(row.cells[3].value)) ? 'red' : null,
+                                    backgroundColor: (hasPassed(row.cells[3].value)) ? 'rgba(255, 32, 21, 0.4)' : null,
                                     display: (fetchData(index,"months_left") !== 0) ? "table-row"  : 'none' 
                                 }}
                             >

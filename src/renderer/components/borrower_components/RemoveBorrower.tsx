@@ -30,7 +30,7 @@ const RemoveBorrower = ({ getData }) => {
 
     return (
         <Popup trigger={
-            <button>
+            <button name="removeborrower">
                 Remove Borrower
             </button>
             }
@@ -40,9 +40,9 @@ const RemoveBorrower = ({ getData }) => {
             <form onSubmit={handleSubmit}>
                 <label>
                     <span>ID of borrower:</span>
-                    <input onChange={e => { setRemoveId(parseInt(e.target.value)); console.log(e.target.value) }} defaultValue={removeId} required />
+                    <input name="id" onChange={e => { setRemoveId(parseInt(e.target.value)); console.log(e.target.value) }} defaultValue={removeId} required />
                 </label>
-                <button type="submit">Remove Borrower</button>
+                <button name="submitremove" type="submit">Remove Borrower</button>
             </form>
         </Popup>
     );
