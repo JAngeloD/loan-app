@@ -65,6 +65,9 @@ function deleteData(id: number) {
 
     let nextID = db.data[id].id
 
+    //Releases all the payment left of the borrower if there are any
+    addMoneyOnHand(db.data[id].payment_left);
+
     db.data.splice(id, 1);
 
     //Reassigns IDs to all borrowers
@@ -72,9 +75,6 @@ function deleteData(id: number) {
         db.data[i + id].id = nextID;
         nextID++;
     }
-
-    //Releases all the payment left of the borrower if there are any
-    addMoneyOnHand(db.data[id].payment_left);
 
     db.write();
 }
