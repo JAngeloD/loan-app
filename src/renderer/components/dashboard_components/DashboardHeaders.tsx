@@ -38,8 +38,6 @@ export const DashboardHeaders = ({getDashboardData, dashboardData}) => {
                     <p className='amount'>{dashboardData.potential_revenue}</p>
                 </div>
             </div>
-            <div className="borrowers">
-            </div>
         </>
     )
 }

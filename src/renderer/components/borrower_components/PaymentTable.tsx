@@ -24,7 +24,8 @@ export const PaymentTable = ({ id, getData, data, columns }) => {
     //Style hooks for Pop up elements
     const contentStyle= {   
                             background: 'white', 
-                            color: 'black'   
+                            color: 'black',
+                            margin: '5%'   
                         };
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
     const arrowStyle = { color: '#000' }; // style for an svg element

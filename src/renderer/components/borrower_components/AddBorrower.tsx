@@ -27,7 +27,6 @@ const AddBorrower = ({ getData }) => {
         //Checks if the user has enough money to create a borrower
         if (loanamount > fetch("money_on_hand")) {
             alert("Cannot make this borrower, not enough money on hand!")
-            document.getElementById("borrowerForm").style.display = "none"
             event.target.reset()
             return
         }
@@ -59,7 +58,6 @@ const AddBorrower = ({ getData }) => {
             payment_dates: [],
             notes: ""
         })
-        document.getElementById("borrowerForm").style.display = "none";
 
         addMoneyOnHand(loan * -1)
         getData();

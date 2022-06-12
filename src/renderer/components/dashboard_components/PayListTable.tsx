@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
-import { payNextDate } from '../../utils/dbaccess_borrower';
+import { payNextDate, fetchData } from '../../utils/dbaccess_borrower';
 import { calculateData } from '../../utils/dbaccess_main';
 
 const GlobalFilter = ({ filter, setFilter }) => {
@@ -50,7 +50,7 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
     const { globalFilter } = state;
 
     return (
-        <>
+        <div className='borrowers'>
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
             <table {...getTableProps()} className="borrower-table">
                 <thead>
@@ -70,13 +70,14 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={() => {
-                                    window.confirm('Are you sure you wish to delete this item?') ? payNextDate(row.index + 1, rows[index].cells[2].value) : console.log("cancelled")
+                                    window.confirm('Are you sure this borrower has paid? CANNOT BE REVERSED') ? payNextDate(row.index + 1, rows[index].cells[2].value) : console.log("cancelled")
                                     calculateData() 
                                     getData()
                                     resetDashboard()
                                 }}
                                 style={{
-                                    backgroundColor: (hasPassed(row.cells[3].value)) ? 'red' : null
+                                    backgroundColor: (hasPassed(row.cells[3].value)) ? 'red' : null,
+                                    display: (fetchData(row.index, "months_left") !== 0) ? "table-row" : "none"
                                 }}
                             >
                                 {row.cells.map((cell) => {
@@ -87,6 +88,6 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
                     })}
                 </tbody>
             </table>
-        </>
+        </div>
     );
 }

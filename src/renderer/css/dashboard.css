@@ -14,7 +14,6 @@
     width: 75%;
     background-color: white;
     box-shadow: 0 3px 16px rgb(0 0 0 / 0.2);
-    overflow-y: scroll;
     display: grid;
     grid-template-areas: 
         'header1 header2 header3 header4'
@@ -42,3 +41,7 @@
     color: rgb(14, 190, 14);
 }
 
+/* pay list elements */
+.borrowers {
+    overflow-y: scroll;
+}

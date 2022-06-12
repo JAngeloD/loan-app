@@ -63,10 +63,11 @@ function deleteData(id: number) {
         return;
     }
 
+    let nextID = db.data[id].id
+
     db.data.splice(id, 1);
 
     //Reassigns IDs to all borrowers
-    let nextID = db.data[id].id
     for(let i = 0; i < (db.data.length - id); i++) {
         db.data[i + id].id = nextID;
         nextID++;
