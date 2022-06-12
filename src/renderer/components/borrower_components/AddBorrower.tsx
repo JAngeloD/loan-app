@@ -92,32 +92,32 @@ const AddBorrowerForm = ({getData}) => {
         <form id="borrowerForm" onSubmit={handleSubmit}>
             <label>
                 <span>First Name:</span>
-                <input onChange={e => { setFirstname(e.target.value) }} required />
+                <input onChange={e => { setFirstname(e.target.value) }} defaultValue={firstname} required />
             </label>
 
             <label>
                 <span>Last Name:</span>
-                <input onChange={e => { setLastname(e.target.value) }} required />
+                <input onChange={e => { setLastname(e.target.value) }} defaultValue={lastname} required />
             </label>
 
             <label>
                 <span>Email:</span>
-                <input onChange={e => { setEmail(e.target.value) }} type="email" required />
+                <input onChange={e => { setEmail(e.target.value) }} type="email" defaultValue={email} required />
             </label>
 
             <label>
                 <span>Phone number:</span>
-                <input onChange={e => { setPhone(e.target.value) }} type="tel" required />
+                <input onChange={e => { setPhone(e.target.value) }} type="tel" defaultValue={phone} required />
             </label>
 
             <label>
                 <span>Loan Amount:</span>
-                <input onChange={e => { setLoanAmount(e.target.value) }} type="number" required />
+                <input onChange={e => { setLoanAmount(e.target.value) }} type="number" defaultValue={loanamount} required />
             </label>
 
             <label>
                 <span>Loan Months:</span>
-                <input onChange={e => { setLoanMonths(e.target.value) }} type="number" required />
+                <input onChange={e => { setLoanMonths(e.target.value) }} type="number" defaultValue={loanmonths} required />
             </label>
 
             <label>
@@ -130,12 +130,12 @@ const AddBorrowerForm = ({getData}) => {
 
             <label>
                 <span>Interest:</span>
-                <input onChange={e => { setInterest(e.target.value) }} type="number" required />
+                <input onChange={e => { setInterest(e.target.value) }} type="number" defaultValue={interest} required />
             </label>
 
             <label>
                 <span>Starting Date:</span>
-                <input onChange={e => { setDate(e.target.value) }} type="date" required />
+                <input onChange={e => { setDate(e.target.value) }} type="date" defaultValue={date} required />
             </label>
 
             <button type="submit">

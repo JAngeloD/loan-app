@@ -1,8 +1,10 @@
 import React, {useState} from "react"
+import Popup from 'reactjs-popup';
 import { deleteData } from "../../utils/dbaccess_borrower";
 
 import "../../css/popupform.css"
 import { calculateData } from "../../utils/dbaccess_main";
+
 
 const RemoveBorrower = () => {
     return (
@@ -26,8 +28,8 @@ const RemoveBorrowerForm = ({getData}) => {
             return
         }
 
-        deleteData(removeId);
-        getData();
+        deleteData(removeId); 
+        getData(); //Re renders the borrower table
         document.getElementById("removeForm").style.display = "none";
 
         event.target.reset()
@@ -38,7 +40,7 @@ const RemoveBorrowerForm = ({getData}) => {
         <form id="removeForm" onSubmit={handleSubmit}>
             <label>
                 <span>ID of borrower:</span>
-                <input onChange={e => {setRemoveId(parseInt(e.target.value))}} required />
+                <input onChange={e => {setRemoveId(parseInt(e.target.value))}} defaultValue={removeId} required />
             </label>
             <button type="submit">Remove Borrower</button>
         </form>
