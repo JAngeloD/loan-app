@@ -35,7 +35,7 @@ type Borrower_Record = {
 
 type Data = Borrower_Record[];
 
-//Data structure from main.json
+//Data structure from maindata.json
 type DataMain = {
     money_on_hand: number,
     money_out: number,

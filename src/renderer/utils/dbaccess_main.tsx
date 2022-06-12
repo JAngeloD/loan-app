@@ -10,7 +10,7 @@ class LowWithLodash<T> extends LowSync<T> {
 }
 
 // Use JSON file for storage
-const filePath = join(__dirname, 'main.json')
+const filePath = join(__dirname, 'maindata.json')
 const adapter = new JSONFileSync<DataMain>(filePath)
 const db = new LowWithLodash(adapter)
 

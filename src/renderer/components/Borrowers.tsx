@@ -74,9 +74,7 @@ export const Borrowers = () => {
                 </div>
                 <PaymentTable id={id} getData={getPayData} data={payData} columns={PAYMENTCOLUMNS} />
                 <div className='notes'>
-                    <textarea onChange={e => { setNote(e.target.value) }}>
-                        {fetchData(id, "notes")}
-                    </textarea>
+                    <textarea onChange={e => { setNote(e.target.value) }} defaultValue={fetchData(id, "notes")} />
                     <button onClick={() => {
                         editData(id + 1, "notes", note) //offset the offset
                     }}

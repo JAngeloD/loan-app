@@ -32,7 +32,7 @@ export const Dashboard = ({navChoice}) => {
         });
     }
     const getDashboardData = () => {
-        fetch('main.json'
+        fetch('maindata.json'
             , {
                 headers: {
                     'Content-Type': 'application/json',

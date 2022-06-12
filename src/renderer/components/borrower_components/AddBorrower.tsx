@@ -61,7 +61,7 @@ const AddBorrower = ({ getData }) => {
 
         addMoneyOnHand(loan * -1)
         getData();
-        calculateData(); //Recalculates the values of the main.json file
+        calculateData(); //Recalculates the values of the maindata.json file
 
         //Reset all states to their default
         setFirstname('')
