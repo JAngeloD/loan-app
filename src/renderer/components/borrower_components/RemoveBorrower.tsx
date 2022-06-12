@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import Popup from 'reactjs-popup';
 import { deleteData } from "../../utils/dbaccess_borrower";
 
@@ -6,46 +6,47 @@ import "../../css/popupform.css"
 import { calculateData } from "../../utils/dbaccess_main";
 
 
-const RemoveBorrower = () => {
-    return (
-        <button onClick={() => {document.getElementById("removeForm").style.display = "block";}}>
-            Remove Borrower
-        </button>
-    );
-}
-
-const RemoveBorrowerForm = ({getData}) => {
+const RemoveBorrower = ({ getData }) => {
 
     const [removeId, setRemoveId] = useState(0);
 
     const handleSubmit = event => {
         event.preventDefault()
 
-        if(removeId === 0) {
+        if (removeId === 0) {
             alert("input a number above 0")
-            document.getElementById("removeForm").style.display = "none";
             event.target.reset()
             return
         }
 
-        deleteData(removeId); 
+        deleteData(removeId);
         getData(); //Re renders the borrower table
-        document.getElementById("removeForm").style.display = "none";
 
         event.target.reset()
         calculateData(true); //Recalculates all the values in the db 
     }
+    
+    const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
     return (
-        <form id="removeForm" onSubmit={handleSubmit}>
-            <label>
-                <span>ID of borrower:</span>
-                <input onChange={e => {setRemoveId(parseInt(e.target.value))}} defaultValue={removeId} required />
-            </label>
-            <button type="submit">Remove Borrower</button>
-        </form>
+        <Popup trigger={
+            <button>
+                Remove Borrower
+            </button>
+            }
+            modal
+            {...{overlayStyle}}
+        >
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <span>ID of borrower:</span>
+                    <input onChange={e => { setRemoveId(parseInt(e.target.value)) }} defaultValue={removeId} required />
+                </label>
+                <button type="submit">Remove Borrower</button>
+            </form>
+        </Popup>
     );
 }
 
 
-export {RemoveBorrower, RemoveBorrowerForm}
+export { RemoveBorrower }

@@ -1,13 +1,10 @@
 form {
-    display: none;
-    position: fixed;
     background-color: white;
     justify-content: center;
     width: 45vw;
-    height: 30vw;
     border: 3px solid black;
     padding: 3%;
-    transform: translate(15%, -15%);
+    color: black
 }
 
 form > label {
