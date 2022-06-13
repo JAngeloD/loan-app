@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import Popup from 'reactjs-popup';
 import { fetchData, payNextDate } from '../../utils/dbaccess_borrower';
@@ -50,6 +50,8 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
 
     const { globalFilter } = state;
 
+    const [isOpen, setOpen] = useState(false);
+
     return (
         <div className='borrowers' >
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -69,32 +71,34 @@ export const PayListTable = ({ getData, resetDashboard, columns, data }) => {
                     {rows.map((row, index) => {
                         prepareRow(row);
                         return (
-                            <Popup
-                                trigger={
-                                    <tr {...row.getRowProps()}
-                                        style={{
-                                            backgroundColor: (hasPassed(row.cells[3].value)) ? 'rgba(255, 32, 21, 0.4)' : null,
-                                            display: (fetchData(index, "months_left") !== 0) ? "table-row" : 'none'
-                                        }}
-                                    >
-                                        {row.cells.map((cell) => {
-                                            return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                        })}
-                                    </tr>
-                                }
-                                modal
-                                {...{overlayStyle: {background: 'rgba(0,0,0,0.5)'}}}
+                            <><tr {...row.getRowProps()}
+                                onClick={() => {
+                                    setOpen(true)
+                                }}
+                                style={{
+                                    backgroundColor: (hasPassed(row.cells[3].value)) ? 'rgba(255, 32, 21, 0.4)' : null,
+                                    display: (fetchData(index, "months_left") !== 0) ? "table-row" : 'none'
+                                }}
                             >
-                                <div id="confirmation">
-                                    Are you sure that this borrower has paid?
-                                    <button onClick={() => {
-                                        payNextDate(row.index + 1, rows[index].cells[2].value)
-                                        calculateData()
-                                        getData()
-                                        resetDashboard()
-                                    }}>Yes</button>
-                                </div>
-                            </Popup>
+                                {row.cells.map((cell) => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                                })}
+                            </tr><Popup
+                                open={isOpen}
+                                modal
+                                {...{ overlayStyle: { background: 'rgba(0,0,0,0.5)' } }}
+                            >
+                                    <div id="confirmation">
+                                        Are you sure that this borrower has paid?
+                                        <button onClick={() => {
+                                            payNextDate(row.index + 1, rows[index].cells[2].value);
+                                            calculateData();
+                                            getData();
+                                            resetDashboard();
+                                            setOpen(false);
+                                        }}>Yes</button>
+                                    </div>
+                                </Popup></>
                         );
                     })}
                 </tbody>

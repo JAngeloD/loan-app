@@ -24,6 +24,8 @@ const AddBorrower = ({ getData }) => {
     const [interest, setInterest] = useState('');
     const [date, setDate] = useState('');
 
+    const [isOpen, setOpen] = useState(false);
+
     const resetStates = () => {
         setFirstname('')
         setLastname('')
@@ -42,7 +44,7 @@ const AddBorrower = ({ getData }) => {
 
         //Checks if the user has enough money to create a borrower
         if (loanamount > fetch("money_on_hand")) {
-            alert("Cannot make this borrower, not enough money on hand!")
+            setOpen(false)
             resetStates()
             event.target.reset()
             return
@@ -83,7 +85,7 @@ const AddBorrower = ({ getData }) => {
 
         //Reset all states to their default
         resetStates()
-        
+
         //Resets the form
         event.target.reset()
     }
@@ -91,75 +93,74 @@ const AddBorrower = ({ getData }) => {
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
     return (
-        <Popup trigger={
-            <button name="addborrower">
-                AddBorrower
-            </button>
-        }
-        modal
-        {...{overlayStyle}}
+        <><button name="addborrower" onClick={() => { setOpen(true) }}>
+            AddBorrower
+        </button><Popup
+            open={isOpen}
+            modal
+            {...{ overlayStyle }}
         >
-            return (
-            <form id="borrowerForm" onSubmit={handleSubmit}>
-                <label>
-                    <span>First Name:</span>
-                    <input name="firstname" onChange={e => { setFirstname(e.target.value) }} defaultValue={firstname} required />
-                </label>
+                return (
+                <form id="borrowerForm" onSubmit={handleSubmit}>
+                    <label>
+                        <span>First Name:</span>
+                        <input name="firstname" onChange={e => { setFirstname(e.target.value) }} defaultValue={firstname} required />
+                    </label>
 
-                <label>
-                    <span>Last Name:</span>
-                    <input name="lastname" onChange={e => { setLastname(e.target.value) }} defaultValue={lastname} required />
-                </label>
+                    <label>
+                        <span>Last Name:</span>
+                        <input name="lastname" onChange={e => { setLastname(e.target.value) }} defaultValue={lastname} required />
+                    </label>
 
-                <label>
-                    <span>Address:</span>
-                    <input name="address" onChange={e => { setAddress(e.target.value) }} defaultValue={address} />
-                </label>
+                    <label>
+                        <span>Address:</span>
+                        <input name="address" onChange={e => { setAddress(e.target.value) }} defaultValue={address} />
+                    </label>
 
-                <label>
-                    <span>Email:</span>
-                    <input name="email" onChange={e => { setEmail(e.target.value) }} type="email" defaultValue={email} />
-                </label>
+                    <label>
+                        <span>Email:</span>
+                        <input name="email" onChange={e => { setEmail(e.target.value) }} type="email" defaultValue={email} />
+                    </label>
 
-                <label>
-                    <span>Phone number:</span>
-                    <input name="phonenumber" onChange={e => { setPhone(e.target.value) }} type="tel" defaultValue={phone} />
-                </label>
+                    <label>
+                        <span>Phone number:</span>
+                        <input name="phonenumber" onChange={e => { setPhone(e.target.value) }} type="tel" defaultValue={phone} />
+                    </label>
 
-                <label>
-                    <span>Loan Amount:</span>
-                    <input name="loanamount" onChange={e => { setLoanAmount(e.target.value) }} type="number" defaultValue={loanamount} required />
-                </label>
+                    <label>
+                        <span>Loan Amount:</span>
+                        <input name="loanamount" onChange={e => { setLoanAmount(e.target.value) }} type="number" defaultValue={loanamount} required />
+                    </label>
 
-                <label>
-                    <span>Loan Terms:</span>
-                    <input name="loanmonths" onChange={e => { setLoanMonths(e.target.value) }} type="number" defaultValue={loanmonths} required />
-                </label>
+                    <label>
+                        <span>Loan Terms:</span>
+                        <input name="loanmonths" onChange={e => { setLoanMonths(e.target.value) }} type="number" defaultValue={loanmonths} required />
+                    </label>
 
-                <label>
-                    <span>Frequency:</span>
-                    <select name="frequency" onChange={e => { setFrequency(e.target.value) }}>
-                        <option value="bi">Bi-Weekly</option>
-                        <option value="monthly">Monthly</option>
-                    </select>
-                </label>
+                    <label>
+                        <span>Frequency:</span>
+                        <select name="frequency" onChange={e => { setFrequency(e.target.value) }}>
+                            <option value="bi">Bi-Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </label>
 
-                <label>
-                    <span>Interest:</span>
-                    <input name="interest" onChange={e => { setInterest(e.target.value) }} type="number" defaultValue={interest} required />
-                </label>
+                    <label>
+                        <span>Interest:</span>
+                        <input name="interest" onChange={e => { setInterest(e.target.value) }} type="number" defaultValue={interest} required />
+                    </label>
 
-                <label>
-                    <span>Starting Date:</span>
-                    <input name="date" onChange={e => { setDate(e.target.value) }} type="date" defaultValue={date} required />
-                </label>
+                    <label>
+                        <span>Starting Date:</span>
+                        <input name="date" onChange={e => { setDate(e.target.value) }} type="date" defaultValue={date} required />
+                    </label>
 
-                <button type="submit" name="submitborrower">
-                    Add Borrower
-                </button>
-            </form>
-            );
-        </Popup>
+                    <button type="submit" name="submitborrower" onClick={() => { setOpen(false); console.log(isOpen) }}>
+                        Add Borrower
+                    </button>
+                </form>
+                );
+            </Popup></>
     )
 }
 
