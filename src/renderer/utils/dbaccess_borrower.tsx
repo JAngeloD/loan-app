@@ -4,6 +4,8 @@ import { Borrower_Record, Data } from './dbstructure'
 
 import { addMoneyOnHand } from './dbaccess_main'
 
+import fs from 'fs'
+
 //TODO: remove if uncessary in the future
 import lodash from 'lodash'
 class LowWithLodash<T> extends LowSync<T> {
@@ -39,7 +41,7 @@ function addData(record: Borrower_Record = null) {
 
     //Generates a list of days where the borrower must pay. These days depend on:
     //Interest, Total loan periods (Months), and Loan frequency
-    for(let i = 0; i < iter; i++) {
+    for (let i = 0; i < iter; i++) {
         record.payment_dates.push({
             date: currentIterDate.toISOString().split('T').shift(),
             paid: "Not Paid",
@@ -58,7 +60,7 @@ function deleteData(id: number) {
     id -= 1; //offsets id to make it index-based
 
     //Checks if the input exceeds the total record amount.
-    if(id >= db.data.length) {
+    if (id >= db.data.length) {
         alert("ID must exist")
         return;
     }
@@ -68,10 +70,16 @@ function deleteData(id: number) {
     //Releases all the payment left of the borrower if there are any
     addMoneyOnHand(db.data[id].payment_left);
 
+    //Archives the borrower
+    fs.writeFile(join(__dirname, './archive/' + db.data[id].firstname +'.json'), JSON.stringify(db.data[id]), (err) => {
+        if (err) throw err;
+    });
+
+    //Deletes the borrower from the array
     db.data.splice(id, 1);
 
     //Reassigns IDs to all borrowers
-    for(let i = 0; i < (db.data.length - id); i++) {
+    for (let i = 0; i < (db.data.length - id); i++) {
         db.data[i + id].id = nextID;
         nextID++;
     }
@@ -80,7 +88,7 @@ function deleteData(id: number) {
 }
 
 function editData(id: number, attribute: string, val, payment_index = '', payment_col = '') {
-    if(payment_index == null || payment_index == '') {
+    if (payment_index == null || payment_index == '') {
         db.data[id - 1][attribute] = val;
     }
     else {
@@ -97,8 +105,8 @@ function getNextID() {
 }
 
 //Payment table related methods
-function fetchDates(id: number) {return db.data[id].payment_dates} //Fetches all dates from a borrower
-function fetchDate(id: number, dateIndex: number) {return db.data[id].payment_dates[dateIndex]} //Fetches one date from the given borrower
+function fetchDates(id: number) { return db.data[id].payment_dates } //Fetches all dates from a borrower
+function fetchDate(id: number, dateIndex: number) { return db.data[id].payment_dates[dateIndex] } //Fetches one date from the given borrower
 
 //Sets the status of the next payment date to "paid"
 function payNextDate(id: number, amount: number) {
@@ -106,11 +114,11 @@ function payNextDate(id: number, amount: number) {
     const nextPaymentDate = db.data[id].next_payment_date
 
     //loops and tries to find the next payment date in the payment array of the borrower
-    for(let i = 0; i < db.data[id].payment_dates.length; i++) {
-        if(db.data[id].payment_dates[i].date == nextPaymentDate) {
+    for (let i = 0; i < db.data[id].payment_dates.length; i++) {
+        if (db.data[id].payment_dates[i].date == nextPaymentDate) {
             db.data[id].payment_dates[i].paid = "paid"
             //Checks if there is another payment date and assigns the pointer to that 
-            if((i+1) < db.data[id].payment_dates.length) {
+            if ((i + 1) < db.data[id].payment_dates.length) {
                 db.data[id].next_payment_date = db.data[id].payment_dates[i + 1].date
             }
 
@@ -129,4 +137,4 @@ function payNextDate(id: number, amount: number) {
     db.write();
 }
 
-export { fetchData, addData, deleteData, editData, getNextID, payNextDate}
+export { fetchData, addData, deleteData, editData, getNextID, payNextDate }
