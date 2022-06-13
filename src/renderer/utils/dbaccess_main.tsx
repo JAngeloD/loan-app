@@ -1,5 +1,6 @@
 import { join } from 'path'
 import { LowSync, JSONFileSync } from 'lowdb'
+import fs from 'fs'
 import lodash from 'lodash'
 
 import { fetchData, getNextID } from './dbaccess_borrower'
@@ -29,7 +30,7 @@ function fetch(attribute = "") {
     return null;
 }
 
-function editDataMain(attribute = "", val: number) {
+function editDataMain(attribute = "", val: any) {
     if(attribute !== "") {
         db.data[attribute] = val;
     }
@@ -82,4 +83,31 @@ function addMoneyOnHand(val: number) {
     editDataMain("money_on_hand", newMoneyOnHand)
 }
 
-export { fetch,fetchAll, calculateData, addMoneyOnHand }
+
+//IMPORTANT: BACKUP SYSTEM
+//For some reason it not asynchronous and we can't use a bool to check if it all works.
+function tryBackup() {
+    //Grabs today's date and shifts it back one day to avoid UTC offset
+    let todayRaw = new Date() 
+    let today = todayRaw.toLocaleDateString().replace(/\//g, '-')
+
+    if(fs.existsSync(join(__dirname, './backups/maindata-' + today + '.json'))){
+        return
+    }
+
+    function errCallback(err) {
+        if(err) {
+            console.log(err)
+            return
+        }
+        editDataMain("last_backup", today)
+    }
+    
+    if(today !== fetch("last_backup")) {
+        //Duplicates another file
+        fs.copyFile(join(__dirname, 'maindata.json'), join(__dirname, './backups/maindata-' + today + '.json'), errCallback)
+        fs.copyFile(join(__dirname, 'borrower.json'), join(__dirname, './backups/borrower-' + today + '.json'), errCallback)
+    }
+}
+
+export { fetch,fetchAll, calculateData, addMoneyOnHand, tryBackup }

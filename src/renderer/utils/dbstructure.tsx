@@ -38,6 +38,8 @@ type Data = Borrower_Record[];
 
 //Data structure from maindata.json
 type DataMain = {
+    version: number,
+    last_backup: string,
     money_on_hand: number,
     money_out: number,
     revenue: number,
