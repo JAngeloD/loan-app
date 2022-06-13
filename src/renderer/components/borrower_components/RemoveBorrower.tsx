@@ -40,7 +40,7 @@ const RemoveBorrower = ({ getData }) => {
             <form onSubmit={handleSubmit}>
                 <label>
                     <span>ID of borrower:</span>
-                    <input name="id" onChange={e => { setRemoveId(parseInt(e.target.value)); console.log(e.target.value) }} defaultValue={removeId} required />
+                    <input name="id" onChange={e => { setRemoveId(parseInt(e.target.value)); console.log(e.target.value) }} defaultValue={0} required />
                 </label>
                 <button name="submitremove" type="submit">Remove Borrower</button>
             </form>

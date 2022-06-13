@@ -45,3 +45,14 @@
 .borrowers {
     overflow-y: scroll;
 }
+
+/* popup elements */
+#confirmation {
+    background-color: white;
+    justify-content: center;
+    height: 2vw;
+    width: 25vw;
+    border: 3px solid black;
+    padding: 3%;
+    color: black
+}
